@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace LoginServer
+namespace GestionServer
 {
     public interface IController
     {

@@ -9,5 +9,10 @@ namespace GestionServer.Helper
         {
             return JsonConvert.SerializeObject(obj);
         }
+
+        public static E fromJson<E>(string json)
+        {
+            return JsonConvert.DeserializeObject<E>(json);
+        }
     }
 }

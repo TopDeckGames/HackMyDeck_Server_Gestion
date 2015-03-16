@@ -129,5 +129,14 @@ namespace GestionServer
         {
             Logger.log(typeof(Server), this.handlers.Count + " clients connectés", Logger.LogType.Info);
         }
+
+        /// <summary>
+        /// Retourne le nombre de joueurs connectés
+        /// </summary>
+        /// <returns></returns>
+        public int getNbPlayers()
+        {
+            return this.handlers.Count;
+        }
     }
 }

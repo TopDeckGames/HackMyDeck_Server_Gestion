@@ -91,7 +91,6 @@
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\MonitorHandler.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Logger.cs" />
@@ -109,6 +108,9 @@
     <Content Include="Lib\Unix\MySql.Web.dll" />
     <Content Include="Lib\Win\MySql.Data.dll" />
     <Content Include="Lib\Win\MySql.Web.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

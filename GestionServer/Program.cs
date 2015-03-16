@@ -7,13 +7,13 @@ namespace GestionServer
 {
     class MainClass
     {
-        private static Server server;
-        private static Monitor monitor;
+        public static Server Server;
+        public static Monitor Monitor;
 
         public static void Main(string[] args)
         {
-            server = new Server();
-            monitor = new Monitor();
+            Server = new Server();
+            Monitor = new Monitor();
 
             while (true)
             {
@@ -24,16 +24,16 @@ namespace GestionServer
                 {
                     case "stop":
                     case "exit":
-                        server.stop();
-                        monitor.stop();
+                        Server.stop();
+                        Monitor.stop();
                         Environment.Exit(0);
                         break;
                     case "restart":
-                        server.stop();
-                        server = new Server();
+                        Server.stop();
+                        Server = new Server();
                         break;
                     case "info":
-                        server.info();
+                        Server.info();
                         break;
                     case "":
                         break;

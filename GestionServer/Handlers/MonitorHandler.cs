@@ -156,7 +156,10 @@ namespace GestionServer.Handlers
                         Process proc = Process.GetCurrentProcess();
                         temp.Add("memory", proc.PrivateMemorySize64);
                         temp.Add("nbPlayers", MainClass.Server.getNbPlayers());
-                        response = JsonSerializer.toJson(temp);
+                        Request rep = new Request();
+                        rep.Type = Request.TypeRequest.Response;
+                        rep.Data = JsonSerializer.toJson(temp);
+                        response = JsonSerializer.toJson(rep);
                         break;
                     default:
                         continue;

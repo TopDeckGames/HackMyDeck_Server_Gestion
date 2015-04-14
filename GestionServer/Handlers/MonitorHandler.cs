@@ -130,7 +130,7 @@ namespace GestionServer.Handlers
 
         public void analyser()
         {
-            while(this.active)
+            while(this.active || this.requests.Length > 0)
             {
                 Request req;
                 string response = String.Empty;
@@ -147,16 +147,27 @@ namespace GestionServer.Handlers
                     continue;
                 }
 
+                Request rep = new Request();
                 switch(req.Type)
                 {
                     case Request.TypeRequest.Register:
+                        User user = JsonSerializer.fromJson<User>(req.Data);
+                        try
+                        {
+                            Server.AvailableUsers.Add(user, DateTime.Now);
+                            rep.Type = Request.TypeRequest.Response;
+                            response = JsonSerializer.toJson(rep);
+                        }
+                        catch
+                        {
+                            
+                        }
                         break;
                     case Request.TypeRequest.Check:
                         Dictionary<string, object> temp = new Dictionary<string, object>();
                         Process proc = Process.GetCurrentProcess();
                         temp.Add("memory", proc.PrivateMemorySize64);
                         temp.Add("nbPlayers", MainClass.Server.getNbPlayers());
-                        Request rep = new Request();
                         rep.Type = Request.TypeRequest.Response;
                         rep.Data = JsonSerializer.toJson(temp);
                         response = JsonSerializer.toJson(rep);

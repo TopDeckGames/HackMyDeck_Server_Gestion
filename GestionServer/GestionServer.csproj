@@ -88,6 +88,7 @@
     <Compile Include="Helper\JsonSerializer.cs" />
     <Compile Include="Manager\ManagerFactory.cs" />
     <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\MonitorHandler.cs" />
     <Compile Include="Program.cs" />

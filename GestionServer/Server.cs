@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Configuration;
 using GestionServer.Handlers;
+using GestionServer.Model;
 
 namespace GestionServer
 {
@@ -16,6 +17,7 @@ namespace GestionServer
         private volatile int port;
         private volatile List<ClientHandler> handlers = new List<ClientHandler>();
         private volatile bool active;
+        public static Dictionary<User, DateTime> AvailableUsers { get; set; }
 
         /// <summary>
         /// Initialise et démarre le serveur TCP
@@ -27,6 +29,11 @@ namespace GestionServer
             this.active = true;
 
             port = int.Parse(ConfigurationManager.AppSettings["port"]);
+
+            if(Server.AvailableUsers == null)
+            {
+                Server.AvailableUsers = new Dictionary<User, DateTime>();
+            }
 
             this.tcpListener = new TcpListener(IPAddress.Any, port);
             this.listenThread = new Thread(new ThreadStart(listenForClients));
@@ -83,12 +90,26 @@ namespace GestionServer
         {
             while (this.active)
             {
+                lock(Server.AvailableUsers)
+                {
+                    Dictionary<User, DateTime> temp = new Dictionary<User, DateTime>();
+                    foreach(KeyValuePair<User, DateTime> k in Server.AvailableUsers)
+                    {
+                        k.Value.AddMinutes(10);
+                        if(DateTime.Compare(k.Value, DateTime.Now) > 0)
+                        {
+                            temp.Add(k.Key, k.Value);
+                        }
+                    }
+                    Server.AvailableUsers = temp;
+                }
+
                 lock (this.handlers)
                 {
                     List<ClientHandler> temp = new List<ClientHandler>();
                     foreach (ClientHandler client in this.handlers)
                     {
-                        if (client.isActive())
+                        if (client.isActive() && Server.AvailableUsers.ContainsKey(client.User))
                         {
                             temp.Add(client);
                         }
@@ -133,7 +154,7 @@ namespace GestionServer
         /// <summary>
         /// Retourne le nombre de joueurs connectés
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Int</returns>
         public int getNbPlayers()
         {
             return this.handlers.Count;

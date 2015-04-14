@@ -6,9 +6,11 @@ using System.IO;
 using System.Configuration;
 using System.Threading;
 using System.Net;
+using System.Collections.Generic;
 
 using GestionServer.Controller;
 using GestionServer.Helper;
+using GestionServer.Model;
 
 namespace GestionServer.Handlers
 {
@@ -19,6 +21,7 @@ namespace GestionServer.Handlers
         private Thread requestActionThread;
         private volatile NetworkStream clientStream;
         private volatile byte[] requests;
+        public User User { get; set; }
         private volatile bool active;
         public bool Active
         {
@@ -52,10 +55,47 @@ namespace GestionServer.Handlers
             //Récupèration de la taille des blocs
             this.messageLength = int.Parse(ConfigurationManager.AppSettings["message_length"]);
             this.Active = true;
+
+            //On attend que le client envoi son id
+            this.clientStream = this.tcpClient.GetStream();
+            byte[] data = new byte[this.messageLength];
+            int bytesRead = this.clientStream.Read(data, 0, this.messageLength);
+            //On vérifie que l'id est autorisé
+            using(MemoryStream ms = new MemoryStream(data))
+            {
+                using(BinaryReader reader = new BinaryReader(ms))
+                {
+                    int id = reader.ReadInt32();
+
+                    foreach(KeyValuePair<User, DateTime> k in Server.AvailableUsers)
+                    {
+                        if(k.Key.Id.Equals(id))
+                        {
+                            DateTime time = DateTime.FromOADate(k.Value.ToOADate());
+                            time = time.AddMinutes(10);                           
+                            if(DateTime.Compare(time, DateTime.Now) >= 0)
+                            {
+                                this.User = k.Key;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(this.User == null)
+            {
+                throw new Exception("Client non autorisé");
+            }
+            else
+            {
+                Server.AvailableUsers.Remove(this.User);
+                Server.AvailableUsers.Add(this.User, DateTime.Now);
+            }
+
             //Démarage du thread de traitement des requêtes
             this.requestActionThread = new Thread(new ThreadStart(requestAction));
             this.requestActionThread.Start();
-
         }
 
         /// <summary>
@@ -102,6 +142,10 @@ namespace GestionServer.Handlers
                         this.requests = new byte[message.Length];
                         message.CopyTo(this.requests, 0);
                     }
+
+                    //On reset le chrono d'activité du joueur
+                    Server.AvailableUsers.Remove(this.User);
+                    Server.AvailableUsers.Add(this.User, DateTime.Now);
                 }
 
                 clientStream.Close();
@@ -133,26 +177,27 @@ namespace GestionServer.Handlers
                 Logger.log(typeof(ClientHandler), "Requete", Logger.LogType.Info);
                 Stream stream = new MemoryStream(request);
                 Response response = this.parser(stream);
-                
+
                 //Si le client est encore connecté on lui envoi la réponse
-                if(this.tcpClient.Connected)
+                if (this.tcpClient.Connected)
                 {
-	                byte[] data = response.getResponse();
-	                
-	                //Complète de façons à ce que la réponse soit un multiple de la longueur du message définie
-	                int diff = this.messageLength - data.Length % this.messageLength;
-	                if(diff > 0)
-	                {
-	                	byte[] temp = new byte[data.Length + diff];
-	                	data.CopyTo(temp, 0);
-	                	for(int i = 0; i < diff; i++)
-	                	{
-	                		data[data.Length + i] = 0;
-	                	}
-	                	data = temp;
-	                }
-	                
-	                this.tcpClient.Client.Send(data, data.Length, SocketFlags.None);
+                    byte[] data = response.getResponse();
+                    response.closeWriter();
+
+                    //Complète de façons à ce que la réponse soit un multiple de la longueur du message définie
+                    int diff = this.messageLength - data.Length % this.messageLength;
+                    if (diff > 0)
+                    {
+                        byte[] temp = new byte[data.Length + diff];
+                        data.CopyTo(temp, 0);
+                        for (int i = 0; i < diff; i++)
+                        {
+                            temp[data.Length + i] = 0;
+                        }
+                        data = temp;
+                    }
+
+                    this.tcpClient.Client.Send(data, data.Length, SocketFlags.None);
                 }
             }
         }
@@ -206,13 +251,15 @@ namespace GestionServer.Handlers
         /// <param name="stream">Stream.</param>
         private Response parser(Stream stream)
         {
-        	Response response;
+            Response response = null;
+            uint token = uint.MinValue;
+            ushort state = 0;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 try
                 {
                     //Lecture de l'entête
-                    uint token = reader.ReadUInt32();
+                    token = reader.ReadUInt32();
                     ushort dataSize = reader.ReadUInt16();
                     ushort idController = reader.ReadUInt16();
                     char[] checksum = reader.ReadChars(32);
@@ -252,25 +299,44 @@ namespace GestionServer.Handlers
                         {
                             default:
                                 Logger.log(typeof(ClientHandler), "Le controlleur n'existe pas " + idController, Logger.LogType.Error);
-                                response = new Response();
-                                response.addValue(0);
                                 break;
                         }
                     }
                     else
                     {
                         Logger.log(typeof(ClientHandler), "Les données sont érronées", Logger.LogType.Error);
-                        response = new Response();
-                        response.addValue(0);
                     }
                 }
                 catch (Exception e)
                 {
                     Logger.log(typeof(ClientHandler), e.Message, Logger.LogType.Error);
-                    response = new Response();
-                    response.addValue(0);
                 }
             }
+
+            //Écriture de l'entête
+            try
+            {
+                byte[] responseContent = new byte[0];
+                if (response != null)
+                    responseContent = response.getResponse();
+
+                Response finalResponse = new Response();
+                finalResponse.openWriter();
+
+                finalResponse.addValue(token);
+                finalResponse.addValue(ushort.Parse(responseContent.Length.ToString()));
+                finalResponse.addValue(state);
+                finalResponse.addValue(Checksum.create(responseContent));
+                finalResponse.addValue(responseContent);
+
+                response = finalResponse;
+            }
+            catch (Exception e)
+            {
+                Logger.log(typeof(ClientHandler), "Impossible d'écrire la réponse : " + e.Message, Logger.LogType.Fatal);
+                response = new Response();
+            }
+
             return response;
         }
 

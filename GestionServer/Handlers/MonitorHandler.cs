@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Configuration;
@@ -162,6 +163,11 @@ namespace GestionServer.Handlers
                         {
                             
                         }
+                        break;
+                    case Request.TypeRequest.EnterCombat:
+                        KeyValuePair<User, Model.Server> data = JsonSerializer.fromJson<KeyValuePair<User, Model.Server>>(req.Data);
+                        ClientHandler client = (ClientHandler)MainClass.Server.Handlers.Where(x => x.User.Id.Equals(data.Key.Id));
+                        client.enterCombat(data.Value);
                         break;
                     case Request.TypeRequest.Check:
                         Dictionary<string, object> temp = new Dictionary<string, object>();

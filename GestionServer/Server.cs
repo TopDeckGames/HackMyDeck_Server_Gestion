@@ -15,7 +15,7 @@ namespace GestionServer
         private volatile TcpListener tcpListener;
         private Thread listenThread, cleanupThread;
         private volatile int port;
-        private volatile List<ClientHandler> handlers = new List<ClientHandler>();
+        public  volatile List<ClientHandler> Handlers = new List<ClientHandler>();
         private volatile bool active;
         public static Dictionary<User, DateTime> AvailableUsers { get; set; }
 
@@ -64,12 +64,12 @@ namespace GestionServer
                 }
                 ClientHandler clientHandler;
 
-                lock (this.handlers)
+                lock (this.Handlers)
                 {
                     try
                     {
                         clientHandler = new ClientHandler(client);
-                        this.handlers.Add(clientHandler);
+                        this.Handlers.Add(clientHandler);
                     }
                     catch (Exception e)
                     {
@@ -104,17 +104,17 @@ namespace GestionServer
                     Server.AvailableUsers = temp;
                 }
 
-                lock (this.handlers)
+                lock (this.Handlers)
                 {
                     List<ClientHandler> temp = new List<ClientHandler>();
-                    foreach (ClientHandler client in this.handlers)
+                    foreach (ClientHandler client in this.Handlers)
                     {
                         if (client.isActive() && Server.AvailableUsers.ContainsKey(client.User))
                         {
                             temp.Add(client);
                         }
                     }
-                    this.handlers = temp;
+                    this.Handlers = temp;
                 }
 
                 System.Threading.Thread.Sleep(300000);
@@ -130,10 +130,10 @@ namespace GestionServer
 
             this.active = false;
 
-            lock (this.handlers)
+            lock (this.Handlers)
             {
                 //Arrêt des threads en cours
-                foreach (ClientHandler client in this.handlers)
+                foreach (ClientHandler client in this.Handlers)
                 {
                     client.Active = false;
                 }
@@ -148,7 +148,7 @@ namespace GestionServer
         /// </summary>
         public void info()
         {
-            Logger.log(typeof(Server), this.handlers.Count + " clients connectés", Logger.LogType.Info);
+            Logger.log(typeof(Server), this.Handlers.Count + " clients connectés", Logger.LogType.Info);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace GestionServer
         /// <returns>Int</returns>
         public int getNbPlayers()
         {
-            return this.handlers.Count;
+            return this.Handlers.Count;
         }
     }
 }

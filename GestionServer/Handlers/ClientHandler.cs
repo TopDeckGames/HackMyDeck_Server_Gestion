@@ -21,6 +21,7 @@ namespace GestionServer.Handlers
         private Thread requestActionThread;
         private volatile NetworkStream clientStream;
         private volatile byte[] requests;
+        private uint combatToken;
         public User User { get; set; }
         private volatile bool active;
         public bool Active
@@ -179,26 +180,7 @@ namespace GestionServer.Handlers
                 Response response = this.parser(stream);
 
                 //Si le client est encore connecté on lui envoi la réponse
-                if (this.tcpClient.Connected)
-                {
-                    byte[] data = response.getResponse();
-                    response.closeWriter();
-
-                    //Complète de façons à ce que la réponse soit un multiple de la longueur du message définie
-                    int diff = this.messageLength - data.Length % this.messageLength;
-                    if (diff > 0)
-                    {
-                        byte[] temp = new byte[data.Length + diff];
-                        data.CopyTo(temp, 0);
-                        for (int i = 0; i < diff; i++)
-                        {
-                            temp[data.Length + i] = 0;
-                        }
-                        data = temp;
-                    }
-
-                    this.tcpClient.Client.Send(data, data.Length, SocketFlags.None);
-                }
+                this.sendResponse(response);
             }
         }
 
@@ -347,6 +329,72 @@ namespace GestionServer.Handlers
         public bool isActive()
         {
             return this.Active || this.requests != null;
+        }
+
+        /// <summary>
+        /// Envoi une réponse au client
+        /// </summary>
+        /// <param name="response">Réponse à envoyer</param>
+        public void sendResponse(Response response)
+        {
+            if (this.tcpClient.Connected)
+            {
+                byte[] data = response.getResponse();
+                response.closeWriter();
+
+                //Complète de façons à ce que la réponse soit un multiple de la longueur du message définie
+                int diff = this.messageLength - data.Length % this.messageLength;
+                if (diff > 0)
+                {
+                    byte[] temp = new byte[data.Length + diff];
+                    data.CopyTo(temp, 0);
+                    for (int i = 0; i < diff; i++)
+                    {
+                        temp[data.Length + i] = 0;
+                    }
+                    data = temp;
+                }
+
+                this.tcpClient.Client.Send(data, data.Length, SocketFlags.None);
+            }
+        }
+
+        /// <summary>
+        /// Envoi au client l'annonce de début de combat
+        /// </summary>
+        /// <param name="server">Serveur vers lequel rediriger le joueur</param>
+        public void enterCombat(Model.Server server)
+        {
+            Response resp = new Response();
+            resp.addValue((ushort)1);
+            //Ajout des données de connexion au server
+            resp.addValue(BitConverter.ToInt32(server.Address.GetAddressBytes(), 0));
+            resp.addValue(server.Port);
+
+            //Écriture de l'entête
+            try
+            {
+                byte[] responseContent = new byte[0];
+                if (resp != null)
+                    responseContent = resp.getResponse();
+
+                Response finalResponse = new Response();
+                finalResponse.openWriter();
+                finalResponse.addValue(this.combatToken);
+                finalResponse.addValue(ushort.Parse(responseContent.Length.ToString()));
+                finalResponse.addValue((ushort)0);
+                finalResponse.addValue(Checksum.create(responseContent));
+                finalResponse.addValue(responseContent);
+
+                resp = finalResponse;
+            }
+            catch (Exception e)
+            {
+                Logger.log(typeof(MonitorHandler), "Impossible d'écrire la réponse : " + e.Message, Logger.LogType.Fatal);
+                resp = new Response();
+            }
+
+            this.sendResponse(resp);
         }
     }
 }

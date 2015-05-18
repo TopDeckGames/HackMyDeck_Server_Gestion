@@ -21,7 +21,7 @@ namespace GestionServer.Handlers
         private Thread requestActionThread;
         private volatile NetworkStream clientStream;
         private volatile byte[] requests;
-        private uint combatToken;
+        public uint CombatToken { get; set; }
         public User User { get; set; }
         private volatile bool active;
         public bool Active
@@ -279,6 +279,10 @@ namespace GestionServer.Handlers
 
                         switch (idController)
                         {
+                            case 2:
+                                response = ControllerFactory.getGestionController().parser(dataStream);
+                                state = 1;
+                                break;
                             default:
                                 Logger.log(typeof(ClientHandler), "Le controlleur n'existe pas " + idController, Logger.LogType.Error);
                                 break;
@@ -380,7 +384,7 @@ namespace GestionServer.Handlers
 
                 Response finalResponse = new Response();
                 finalResponse.openWriter();
-                finalResponse.addValue(this.combatToken);
+                finalResponse.addValue(this.CombatToken);
                 finalResponse.addValue(ushort.Parse(responseContent.Length.ToString()));
                 finalResponse.addValue((ushort)0);
                 finalResponse.addValue(Checksum.create(responseContent));

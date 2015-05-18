@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerFactory.cs" />
+    <Compile Include="Controller\GestionController.cs" />
     <Compile Include="Controller\IController.cs" />
     <Compile Include="Data\AdapterFactory.cs" />
     <Compile Include="Data\BaseAdapter.cs" />

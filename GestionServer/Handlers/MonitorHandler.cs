@@ -11,6 +11,7 @@ using System.IO;
 using GestionServer.Helper;
 using GestionServer.Model;
 using System.Diagnostics;
+using GestionServer.Manager;
 
 namespace GestionServer.Handlers
 {
@@ -71,6 +72,9 @@ namespace GestionServer.Handlers
             this.analyserThread = new Thread(new ThreadStart(analyser));
             this.handleThread.Start();
             this.analyserThread.Start();
+
+            ManagerFactory.getMasterManager().MasterAddress = ((IPEndPoint)this.tcpClient.Client.RemoteEndPoint).Address;
+            ManagerFactory.getMasterManager().MasterPort = ((IPEndPoint)this.tcpClient.Client.RemoteEndPoint).Port;
         }
 
         /// <summary>

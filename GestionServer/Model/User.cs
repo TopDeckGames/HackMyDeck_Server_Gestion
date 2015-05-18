@@ -15,6 +15,8 @@ namespace GestionServer.Model
         public string Firstname { get; set; }
         public string Lastname { get; set; }
 
+        public Server CurrentServer { get; set; }
+
         public User(int id)
         {
             this.Id = id;

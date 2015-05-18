@@ -171,3 +171,6 @@ UpgradeLog*.htm
 # Microsoft Fakes 
 FakesAssemblies/ 
 /ZombieGame/publier
+/GestionServer/bin
+/GestionServer/obj
+*.suo

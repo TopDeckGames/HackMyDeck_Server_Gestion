@@ -5,15 +5,21 @@ using System.Text;
 
 namespace GestionServer.Model
 {
-    class Leader
+    public class Leader
     {
-        public string Name;
-        public object Effect;
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Effect { get; set; }
+        public int Energy { get; set; }
+        public int Price { get; set; }
 
-        public Leader(string name, object effect)
+        public Leader(string name, string effect, string description, int energy, int price)
         {
             this.Name = name;
             this.Effect = effect;
+            this.Description = description;
+            this.Energy = energy;
+            this.Price = price;
         }
     }
 }

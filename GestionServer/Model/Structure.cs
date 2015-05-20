@@ -5,15 +5,15 @@ using System.Text;
 
 namespace GestionServer.Model
 {
-    class Structure
+    public class Structure
     {
-        public enum TypeBat { exemple=1 }
-        public string Name;
-        public TypeBat Type;
-        public int Level;
-        public string Description;
-        public Boolean Locked;
-        public int Effectif;
+        public enum TypeBat { Research=1, Store=2, Communication=3, Construction=4, Formation=5 }
+        public string Name { get; set; }
+        public TypeBat Type { get; set; }
+        public int Level { get; set; }
+        public string Description { get; set; }
+        public Boolean Locked { get; set; }
+        public int Effectif { get; set; }
 
         public Structure(string name, TypeBat type, int level, string description, Boolean locked, int effectif)
         {

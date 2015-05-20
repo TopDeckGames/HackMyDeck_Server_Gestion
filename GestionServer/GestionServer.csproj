@@ -89,8 +89,12 @@
     <Compile Include="Helper\JsonSerializer.cs" />
     <Compile Include="Manager\ManagerFactory.cs" />
     <Compile Include="Manager\MasterManager.cs" />
+    <Compile Include="Model\Card.cs" />
+    <Compile Include="Model\Enhancement.cs" />
+    <Compile Include="Model\Leader.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Model\Server.cs" />
+    <Compile Include="Model\Structure.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\MonitorHandler.cs" />

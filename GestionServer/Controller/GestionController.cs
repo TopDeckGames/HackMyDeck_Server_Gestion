@@ -18,7 +18,7 @@ namespace GestionServer.Controller
         /// <param name="stream">Flux de données à traiter</param>
         public Response parser(Stream stream)
         {
-            Response response;
+            Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 try
@@ -36,6 +36,12 @@ namespace GestionServer.Controller
                             break;
                         case 2:
                             response = this.leaveCombatAction(reader.ReadInt32());
+                            break;
+                        case 3:
+                            response = this.getCards();
+                            break;
+                        case 4:
+                            response = this.getStructures();
                             break;
                         default:
                             Logger.log(typeof(GestionController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
@@ -126,29 +132,6 @@ namespace GestionServer.Controller
                 ManagerFactory.getMasterManager().leaveCombatQueue(user);
                 response.addValue(1);
             }
-
-            return response;
-        }
-
-        private Response buyLeader(int idUser, int idLeader)
-        {
-            Response response = new Response();
-
-            try
-            {
-                ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
-            }
-            catch
-            {
-
-            }
-
-            return response;
-        }
-
-        private Response buyCard(int idUser, int idCard)
-        {
-            Response response = new Response();
 
             return response;
         }

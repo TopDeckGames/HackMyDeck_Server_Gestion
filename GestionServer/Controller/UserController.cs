@@ -16,7 +16,7 @@ namespace GestionServer.Controller
         /// <param name="stream">Flux de données à traiter</param>
         public Response parser(Stream stream)
         {
-            Response response;
+            Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 try
@@ -25,6 +25,15 @@ namespace GestionServer.Controller
 
                     switch (idAction)
                     {
+                        case 1:
+                            response = this.getStructures(reader.ReadInt32());
+                            break;
+                        case 2:
+                            response = this.buyLeader(reader.ReadInt32(), reader.ReadInt32());
+                            break;
+                        case 3:
+                            response = this.buyCard(reader.ReadInt32(), reader.ReadInt32());
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -88,6 +97,39 @@ namespace GestionServer.Controller
             return response;
         }
 
+        /// <summary>
+        /// Achat d'un leader
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idLeader">Identifiant du leader</param>
+        /// <returns>Réponse</returns>
+        private Response buyLeader(int idUser, int idLeader)
+        {
+            Response response = new Response();
 
+            try
+            {
+                ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
+            }
+            catch
+            {
+
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Achat d'une carte
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idCard">Identifiant de la carte</param>
+        /// <returns>Réponse</returns>
+        private Response buyCard(int idUser, int idCard)
+        {
+            Response response = new Response();
+
+            return response;
+        }
     }
 }

@@ -15,14 +15,5 @@ namespace GestionServer.Model
         public Boolean Locked { get; set; }
         public int Effectif { get; set; }
 
-        public Structure(string name, TypeBat type, int level, string description, Boolean locked, int effectif)
-        {
-            this.Name = name;
-            this.Type = type;
-            this.Level = level;
-            this.Description = description;
-            this.Locked = locked;
-            this.Effectif = effectif;
-        }
     }
 }

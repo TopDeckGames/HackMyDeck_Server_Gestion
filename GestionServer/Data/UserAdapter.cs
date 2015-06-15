@@ -16,45 +16,11 @@ namespace GestionServer.Data
         }
 
         /// <summary>
-        /// Renvoie la carte
+        /// Renvoie les informations utilistateurs
         /// </summary>
-        /// <param name="idCard">idCard.</param>
-        public Card getCard(int idCard)
+        /// <param name="idUtilisateur">idUtilisateur.</param>
+        public User getInfos(string idUtilisateur)
         {
-            MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = ""; // Request SQL Here pour récuperer carte (CHECK BDD)!
-            cmd.Parameters.AddWithValue("@idCard", idCard);
-            MySqlDataReader reader;
-
-            try
-            {
-                base.connection.Open();
-                reader = cmd.ExecuteReader();
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                base.connection.Close();
-            }
-
-            // On check si la carte existe bien en base !
-            if (reader.HasRows)
-            {
-                DataTable dt = new DataTable();
-                dt.Load(reader);
-                reader.Close();
-
-                if (dt.Rows.Count == 1) // Si on a trouvé la carte, on la renvoie avec tte les infos.
-                {
-                    DataRow row = dt.Rows[0];
-                    //Card card = new Card(); Check BDD
-                    //return card;
-                }
-            }
-            reader.Close();
             return null;
         }
     }

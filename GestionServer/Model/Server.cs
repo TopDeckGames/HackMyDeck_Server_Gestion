@@ -5,6 +5,7 @@ namespace GestionServer.Model
 {
     public class Server
     {
+
         public enum ServerType { Gestion = 1, Combat = 2 };
 
         public string Name { get; set; }

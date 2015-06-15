@@ -57,15 +57,15 @@ namespace GestionServer.Manager
             }
         } */
 
+
         /// <summary>
         /// Récupère une carte
         /// </summary>
-        /// <returns>Une carte</returns>
-        /// <param name="idCard">idCard</param>
-        public Card getCard(int idCard) {
+        /// <returns>Liste de toute les cartes</returns>
+        public List<Card> getCards(int idCard) {
           try
             {
-                return AdapterFactory.getUserAdapter().getCard(idCard);
+                return AdapterFactory.getCardAdapter().getCards();
             }
             catch (Exception e)
             {

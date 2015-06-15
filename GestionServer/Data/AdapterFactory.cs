@@ -7,6 +7,7 @@ namespace GestionServer.Data
         private static UserAdapter userAdapter;
         private static DeckAdapter deckAdapter;
         private static LeaderAdapter leaderAdapter;
+        private static CardAdapter cardAdapter;
 
         /// <summary>
         /// Retourne l'instance de l'adapter des utilisateurs
@@ -19,6 +20,19 @@ namespace GestionServer.Data
                 AdapterFactory.userAdapter = new UserAdapter();
             }
             return AdapterFactory.userAdapter;
+        }
+
+        /// <summary>
+        /// Retourne l'instance de l'adapter des cartes
+        /// </summary>
+        /// <returns>L'adapteur des cartes</returns>
+        public static CardAdapter getCardAdapter()
+        {
+            if (AdapterFactory.cardAdapter == null)
+            {
+                AdapterFactory.cardAdapter = new CardAdapter();
+            }
+            return AdapterFactory.cardAdapter;
         }
 
         /// <summary>

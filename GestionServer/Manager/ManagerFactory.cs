@@ -50,6 +50,19 @@ namespace GestionServer.Manager
             return ManagerFactory.leaderManager;
         }
 
+        /// <summary>
+        /// Recupère le manager des structures
+        /// </summary>
+        /// <returns></returns>
+        public static StructureManager getStructureManager()
+        {
+            if (ManagerFactory.structureManager == null)
+            {
+                ManagerFactory.structureManager = new StructureManager();
+            }
+            return ManagerFactory.structureManager;
+        }
+
         /*
 
         /// <summary>
@@ -65,19 +78,8 @@ namespace GestionServer.Manager
             return ManagerFactory.researchManager;
         }
 
-        /// <summary>
-        /// Recupère le manager des structures
-        /// </summary>
-        /// <returns></returns>
-        public static StructureManager getStructureManager()
-        {
-            if (ManagerFactory.structureManager == null)
-            {
-                ManagerFactory.structureManager = new StructureManager();
-            }
-            return ManagerFactory.structureManager;
-        } */
-        
+         */
+
         /// <summary>
         /// Retourne le manager des decks
         /// </summary>

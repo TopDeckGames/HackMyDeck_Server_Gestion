@@ -168,6 +168,22 @@ namespace GestionServer
         }
 
         /// <summary>
+        /// Ajoute un booléen à la réponse
+        /// </summary>
+        /// <param name="value">Booléen</param>
+        public void addValue(bool value)
+        {
+            try
+            {
+                this.writer.Write(value);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retourne la réponse au format binaire
         /// </summary>
         /// <returns>Réponse</returns>

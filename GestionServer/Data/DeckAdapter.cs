@@ -24,7 +24,7 @@ namespace GestionServer.Data
         public int addDeck(int idUser, Deck deck)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "INSERT INTO deck values (@idUser, @idLeader)";
+            cmd.CommandText = "INSERT INTO deck(user_id, leader_id) VALUES (@idUser, @idLeader)";
             cmd.Parameters.AddWithValue("@idUser", idUser);
             cmd.Parameters.AddWithValue("@idLeader", deck.Leader);
 

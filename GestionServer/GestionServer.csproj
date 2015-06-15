@@ -88,10 +88,12 @@
     <Compile Include="Data\BaseAdapter.cs" />
     <Compile Include="Data\DeckAdapter.cs" />
     <Compile Include="Data\LeaderAdapter.cs" />
+    <Compile Include="Data\StructureAdapter.cs" />
     <Compile Include="Data\UserAdapter.cs" />
     <Compile Include="Helper\ByteArray.cs" />
     <Compile Include="Helper\Checksum.cs" />
     <Compile Include="Helper\JsonSerializer.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Manager\CardManager.cs" />
     <Compile Include="Manager\DeckManager.cs" />
     <Compile Include="Manager\LeaderManager.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Model\Server.cs" />
     <Compile Include="Model\Structure.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserStructure.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\MonitorHandler.cs" />
     <Compile Include="Program.cs" />

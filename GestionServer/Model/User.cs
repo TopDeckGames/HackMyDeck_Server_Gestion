@@ -17,9 +17,5 @@ namespace GestionServer.Model
 
         public Server CurrentServer { get; set; }
 
-        public User(int id)
-        {
-            this.Id = id;
-        }
     }
 }

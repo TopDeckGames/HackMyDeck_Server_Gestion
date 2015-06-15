@@ -7,19 +7,14 @@ namespace GestionServer.Model
 {
     public class Leader
     {
+        public const int NAME_LENGTH = 50;
+        public const int DESCRIPTION_LENGTH = 255;
+        public const int EFFECT_LENGTH = 50;
+
         public string Name { get; set; }
         public string Description { get; set; }
         public string Effect { get; set; }
         public int Energy { get; set; }
         public int Price { get; set; }
-
-        public Leader(string name, string effect, string description, int energy, int price)
-        {
-            this.Name = name;
-            this.Effect = effect;
-            this.Description = description;
-            this.Energy = energy;
-            this.Price = price;
-        }
     }
 }

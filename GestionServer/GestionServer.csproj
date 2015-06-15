@@ -86,6 +86,7 @@
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Data\AdapterFactory.cs" />
     <Compile Include="Data\BaseAdapter.cs" />
+    <Compile Include="Data\CardAdapter.cs" />
     <Compile Include="Data\DeckAdapter.cs" />
     <Compile Include="Data\LeaderAdapter.cs" />
     <Compile Include="Data\StructureAdapter.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Manager\MasterManager.cs" />
     <Compile Include="Manager\ResearchManager.cs" />
     <Compile Include="Manager\StructureManager.cs" />
+    <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Enhancement.cs" />

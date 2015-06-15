@@ -10,6 +10,8 @@ namespace GestionServer.Manager
         private static ResearchManager researchManager;
         private static StructureManager structureManager;
         private static DeckManager deckManager;
+        private static UserManager userManager;
+
 
         /// <summary>
         /// Recupère le manager du serveur maitre
@@ -91,6 +93,19 @@ namespace GestionServer.Manager
                 ManagerFactory.deckManager = new DeckManager();
             }
             return ManagerFactory.deckManager;
+        }
+
+        /// <summary>
+        /// Retourne le manager des utilisateurs
+        /// </summary>
+        /// <returns>Manager</returns>
+        public static UserManager getUserManager()
+        {
+            if (ManagerFactory.userManager == null)
+            {
+                ManagerFactory.userManager = new UserManager();
+            }
+            return ManagerFactory.userManager;
         }
     }
 }

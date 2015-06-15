@@ -7,19 +7,14 @@ namespace GestionServer.Model
 {
     public class Enhancement
     {
+        public const int NAME_LENGTH = 50;
+        public const int DESCRIPTION_LENGTH = 255;
+
         public string Name { get; set; }
         public string Description { get; set; }
         public object Effect { get; set; }
         public int Cost { get; set; }
         public int Time { get; set; }
 
-        public Enhancement(string name, string description, object effect, int cost, int time)
-        {
-            this.Name = name;
-            this.Description = description;
-            this.Effect = effect;
-            this.Cost = cost; 
-            this.Time = time;
-        }
     }
 }

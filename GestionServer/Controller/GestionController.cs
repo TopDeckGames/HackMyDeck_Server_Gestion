@@ -142,7 +142,38 @@ namespace GestionServer.Controller
         /// <returns>Response</returns>
         private Response getCards()
         {
+            List<Card> cards = null;
             Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                cards = ManagerFactory.getCardManager().getCards();
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(CardManager), "Impossible de récupèrer l'ensemble des cartes : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(cards == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach (var card in cards)
+                {
+                    response.addValue(card.Id);
+                    response.addValue(StringHelper.fillString(card.Title, Card.TITLE_LENGTH));
+                    response.addValue(StringHelper.fillString(card.Description, Card.DESCRIPTION_LENGTH));
+                    response.addValue((int)card.Rarity);
+                    response.addValue(card.CostInGame);
+                    response.addValue(card.CostInStore);
+                    response.addValue(card.IsBuyable);
+                }
+            }
 
             return response;
         }

@@ -14,7 +14,7 @@ namespace GestionServer.Manager
         /// </summary>
         /// <returns>Une liste de carte possédées par le joueur</returns>
         /// <param name="idUser">idUser</param>
-       public List<Card> getOwnedCards(int idUser) {
+       public Dictionary<Card, int> getOwnedCards(int idUser) {
           try
             {
                 return AdapterFactory.getCardAdapter().getOwnedCards(idUser);
@@ -62,7 +62,7 @@ namespace GestionServer.Manager
         /// Récupère une carte
         /// </summary>
         /// <returns>Liste de toute les cartes</returns>
-        public List<Card> getCards(int idCard) {
+        public List<Card> getCards() {
           try
             {
                 return AdapterFactory.getCardAdapter().getCards();

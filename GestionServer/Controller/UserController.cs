@@ -86,7 +86,7 @@ namespace GestionServer.Controller
 
                 //Ajout des valeurs des structures
                 foreach(var structure in structures)
-        {
+                {
                     response.addValue(structure.IdStructure);
                     response.addValue(structure.Level);
                     response.addValue(structure.Locked);
@@ -110,7 +110,7 @@ namespace GestionServer.Controller
             try
             {
                 ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
-        }
+            }
             catch
             {
 
@@ -131,6 +131,7 @@ namespace GestionServer.Controller
 
             return response;
         }
+
         public Response getInfos(int idUser)
         {
             Response response = null;

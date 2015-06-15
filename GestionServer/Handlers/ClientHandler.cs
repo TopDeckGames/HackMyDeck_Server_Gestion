@@ -279,8 +279,16 @@ namespace GestionServer.Handlers
 
                         switch (idController)
                         {
+                            case 1:
+                                response = ControllerFactory.getUserController().parser(dataStream);
+                                state = 1;
+                                break;
                             case 2:
                                 response = ControllerFactory.getGestionController().parser(dataStream);
+                                state = 1;
+                                break;
+                            case 3:
+                                response = ControllerFactory.getDeckController().parser(dataStream);
                                 state = 1;
                                 break;
                             default:

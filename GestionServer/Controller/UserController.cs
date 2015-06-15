@@ -17,6 +17,10 @@ namespace GestionServer.Controller
 
         }
 
-
+        public Response getInfos(int idUser)
+        {
+            Response response = null;
+            return response;
+        }
     }
 }

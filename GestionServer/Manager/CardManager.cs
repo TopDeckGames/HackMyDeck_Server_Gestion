@@ -14,16 +14,16 @@ namespace GestionServer.Manager
         /// </summary>
         /// <returns>Une liste de carte possédées par le joueur</returns>
         /// <param name="idUser">idUser</param>
-       /* public List<Card> getOwnedCards(int idUser) {
+       public List<Card> getOwnedCards(int idUser) {
           try
             {
-                return AdapterFactory.getUserAdapter().getOwnedCards(idUser);
+                return AdapterFactory.getCardAdapter().getOwnedCards(idUser);
             }
             catch (Exception e)
             {
                 throw e;
             }
-        } */
+        }
 
         /// <summary>
         /// Récupère les cartes qui peuvent être achetées par l'utilisateur

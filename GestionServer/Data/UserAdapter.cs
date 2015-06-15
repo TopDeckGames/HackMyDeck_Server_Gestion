@@ -13,7 +13,7 @@ namespace GestionServer.Data
         public UserAdapter()
             : base()
         {
-        }
+        }  
 
         /// <summary>
         /// Renvoie les informations utilistateurs
@@ -21,7 +21,34 @@ namespace GestionServer.Data
         /// <param name="idUtilisateur">idUtilisateur.</param>
         public User getInfos(string idUtilisateur)
         {
-            return null;
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT username, credit FROM user WHERE id = @idUtilisateur";
+            cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+
+            try
+            {
+                base.connection.Open();
+                User user = null;
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        user = new User();
+                        user.Login = (string)reader["username"];
+                        user.Credit = (int)reader["credit"];  
+                    }
+                    return user;  
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
         }
     }
 }

@@ -127,5 +127,28 @@ namespace GestionServer.Controller
 
             return response;
         }
+
+        private Response buyLeader(int idUser, int idLeader)
+        {
+            Response response = new Response();
+
+            try
+            {
+                ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
+            }
+            catch
+            {
+
+            }
+
+            return response;
+        }
+
+        private Response buyCard(int idUser, int idCard)
+        {
+            Response response = new Response();
+
+            return response;
+        }
     }
 }

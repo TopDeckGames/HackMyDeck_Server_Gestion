@@ -80,21 +80,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerFactory.cs" />
+    <Compile Include="Controller\DeckController.cs" />
     <Compile Include="Controller\GestionController.cs" />
     <Compile Include="Controller\IController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Data\AdapterFactory.cs" />
     <Compile Include="Data\BaseAdapter.cs" />
+    <Compile Include="Data\DeckAdapter.cs" />
+    <Compile Include="Data\LeaderAdapter.cs" />
     <Compile Include="Data\UserAdapter.cs" />
     <Compile Include="Helper\ByteArray.cs" />
     <Compile Include="Helper\Checksum.cs" />
     <Compile Include="Helper\JsonSerializer.cs" />
     <Compile Include="Manager\CardManager.cs" />
+    <Compile Include="Manager\DeckManager.cs" />
     <Compile Include="Manager\LeaderManager.cs" />
     <Compile Include="Manager\ManagerFactory.cs" />
     <Compile Include="Manager\MasterManager.cs" />
     <Compile Include="Manager\ResearchManager.cs" />
     <Compile Include="Manager\StructureManager.cs" />
     <Compile Include="Model\Card.cs" />
+    <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Enhancement.cs" />
     <Compile Include="Model\Leader.cs" />
     <Compile Include="Model\Request.cs" />

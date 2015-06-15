@@ -9,6 +9,7 @@ namespace GestionServer.Manager
         private static LeaderManager leaderManager;
         private static ResearchManager researchManager;
         private static StructureManager structureManager;
+        private static DeckManager deckManager;
 
         /// <summary>
         /// Recupère le manager du serveur maitre
@@ -36,7 +37,6 @@ namespace GestionServer.Manager
             return ManagerFactory.cardManager;
         }
 
-        /*
         /// <summary>
         /// Recupère le manager des Leaders
         /// </summary>
@@ -49,6 +49,8 @@ namespace GestionServer.Manager
             }
             return ManagerFactory.leaderManager;
         }
+
+        /*
 
         /// <summary>
         /// Recupère le manager des recherches
@@ -75,6 +77,18 @@ namespace GestionServer.Manager
             }
             return ManagerFactory.structureManager;
         } */
-         
+        
+        /// <summary>
+        /// Retourne le manager des decks
+        /// </summary>
+        /// <returns>Manager</returns>
+        public static DeckManager getDeckManager()
+        {
+            if(ManagerFactory.deckManager == null)
+            {
+                ManagerFactory.deckManager = new DeckManager();
+            }
+            return ManagerFactory.deckManager;
+        }
     }
 }

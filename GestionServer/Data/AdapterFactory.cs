@@ -5,6 +5,9 @@ namespace GestionServer.Data
     public static class AdapterFactory
     {
         private static UserAdapter userAdapter;
+        private static DeckAdapter deckAdapter;
+        private static LeaderAdapter leaderAdapter;
+
         /// <summary>
         /// Retourne l'instance de l'adapter des utilisateurs
         /// </summary>
@@ -16,6 +19,32 @@ namespace GestionServer.Data
                 AdapterFactory.userAdapter = new UserAdapter();
             }
             return AdapterFactory.userAdapter;
+        }
+
+        /// <summary>
+        /// Retourne l'instance de l'adapter des decks
+        /// </summary>
+        /// <returns>Adapter</returns>
+        public static DeckAdapter getDeckAdapter()
+        {
+            if(AdapterFactory.deckAdapter == null)
+            {
+                AdapterFactory.deckAdapter = new DeckAdapter();
+            }
+            return AdapterFactory.deckAdapter;
+        }
+
+        /// <summary>
+        /// Retourne l'instance de l'adapter des leaders
+        /// </summary>
+        /// <returns>Adapter</returns>
+        public static LeaderAdapter getLeaderAdapter()
+        {
+            if(AdapterFactory.leaderAdapter == null)
+            {
+                AdapterFactory.leaderAdapter = new LeaderAdapter();
+            }
+            return AdapterFactory.leaderAdapter;
         }
     }
 }

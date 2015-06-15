@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using GestionServer.Model;
 using System.IO;
 using GestionServer.Manager;
 using GestionServer.Handlers;
 using System.Configuration;
+using GestionServer.Helper;
 
 namespace GestionServer.Controller
 {
@@ -16,7 +18,7 @@ namespace GestionServer.Controller
         /// <param name="stream">Flux de données à traiter</param>
         public Response parser(Stream stream)
         {
-            Response response;
+            Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 try
@@ -34,6 +36,12 @@ namespace GestionServer.Controller
                             break;
                         case 2:
                             response = this.leaveCombatAction(reader.ReadInt32());
+                            break;
+                        case 3:
+                            response = this.getCards();
+                            break;
+                        case 4:
+                            response = this.getStructures();
                             break;
                         default:
                             Logger.log(typeof(GestionController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
@@ -128,25 +136,52 @@ namespace GestionServer.Controller
             return response;
         }
 
-        private Response buyLeader(int idUser, int idLeader)
+        /// <summary>
+        /// Récupère l'ensemble des cartes du jeu
+        /// </summary>
+        /// <returns>Response</returns>
+        private Response getCards()
         {
             Response response = new Response();
-
-            try
-            {
-                ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
-            }
-            catch
-            {
-
-            }
 
             return response;
         }
 
-        private Response buyCard(int idUser, int idCard)
+        /// <summary>
+        /// Récupère l'ensemble des structures du jeu
+        /// </summary>
+        /// <returns>Réponse</returns>
+        private Response getStructures()
         {
+            List<Structure> structures = null;
             Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                structures = ManagerFactory.getStructureManager().getStructures();
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(StructureManager), "Impossible de récupèrer l'ensemble des structures : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(structures == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(var structure in structures)
+                {
+                    response.addValue(structure.Id);
+                    response.addValue(StringHelper.fillString(structure.Name, Structure.NAME_LENGTH));
+                    response.addValue(StringHelper.fillString(structure.Description, Structure.DESCRIPTION_LENGTH));
+                    response.addValue((int)structure.Type);
+                }
+            }
 
             return response;
         }

@@ -7,6 +7,7 @@ namespace GestionServer.Data
         private static UserAdapter userAdapter;
         private static DeckAdapter deckAdapter;
         private static LeaderAdapter leaderAdapter;
+        private static StructureAdapter structureAdapter;
         private static CardAdapter cardAdapter;
 
         /// <summary>
@@ -59,6 +60,19 @@ namespace GestionServer.Data
                 AdapterFactory.leaderAdapter = new LeaderAdapter();
             }
             return AdapterFactory.leaderAdapter;
+        }
+
+        /// <summary>
+        /// Retourne l'instance de l'adapter des structures
+        /// </summary>
+        /// <returns>Adapter</returns>
+        public static StructureAdapter getStructureAdapter()
+        {
+            if(AdapterFactory.structureAdapter == null)
+            {
+                AdapterFactory.structureAdapter = new StructureAdapter();
+            }
+            return AdapterFactory.structureAdapter;
         }
     }
 }

@@ -21,14 +21,14 @@ namespace GestionServer.Data
         /// <param name="idUtilisateur">idUtilisateur.</param>
         public User getInfos(int idUtilisateur)
         {
+            User user = null;
             MySqlCommand cmd = base.connection.CreateCommand();
             cmd.CommandText = "SELECT username, credit FROM user WHERE id = @idUtilisateur";
             cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
 
             try
             {
-                base.connection.Open();
-                User user = null;
+                base.connection.Open();              
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -37,8 +37,7 @@ namespace GestionServer.Data
                         user = new User();
                         user.Login = (string)reader["username"];
                         user.Credit = (int)reader["credit"];  
-                    }
-                    return user;  
+                    }               
                 }
             }
             catch
@@ -49,6 +48,8 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
+
+            return user;  
         }
     }
 }

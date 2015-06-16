@@ -57,7 +57,7 @@ namespace GestionServer.Data
         /// Récupère les cartes possèdées par un utilisateur
         /// </summary>
         /// <param name="idUser">Identifiant de l'utilisateur</param>
-        /// <returns>Liste des cartes ainsi que leur quantité</returns>
+        /// <returns>C:\Users\Pierre\Desktop\HMD\HackMyDeck_Server_Gestion\GestionServer\Model\Card.csListe des cartes ainsi que leur quantité</returns>
         public Dictionary<Card, int> getOwnedCards(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();

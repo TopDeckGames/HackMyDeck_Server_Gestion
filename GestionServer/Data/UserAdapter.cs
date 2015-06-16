@@ -57,9 +57,46 @@ namespace GestionServer.Data
         /// Renvoie le resultats des 10 derniers matchs jouée par le joueur
         /// </summary>
         /// <param name="idUtilisateur">idUtilisateur.</param>
-        public List<Object> getHistory(string idUtilisateur)
+        public List<History> getHistory(string idUtilisateur)
         {
-            return null;
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT game.* FROM game, deck WHERE deck.user_id = @userIdAND (game.firstToPlay_id = deck. game.secondToPlay_id = deck.user_id) ORDER BY game.created DESC limit 10";
+            cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+            List<History> historique = null;
+
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            History histo = new History();
+                            histo.id = (int)reader["id"];
+                            histo.firstToPlay_id = (int)reader["firstToPlay_id"];
+                            histo.created = (DateTime)reader["created"];
+                            histo.totalDamage = (int)reader["totalDamage"];
+                            histo.totalUnit = (int)reader["totalUnit"];
+                            histo.totalTechno = (int)reader["totalTechno"];
+                            histo.winner = (int)reader["winner"];
+                            histo.secondToPlay_id = (int)reader["secondToPlay_id"];
+                            historique.Add(histo);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return historique;  
         }
     }
 }

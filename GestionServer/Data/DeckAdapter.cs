@@ -45,9 +45,43 @@ namespace GestionServer.Data
             return 1;
         }
 
-        public void getDecks(int idUser)
+        public List<Deck> getDecks(int idUser)
         {
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT d.*, de.quantity FROM user u INNER JOIN deck d ON u.id = d.user_id INNER JOIN deck_card de ON d.id = de.deck_id WHERE u.id = @idUser";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+            List<Deck> deck = null;
 
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read()) 
+                        {
+                            Deck d = new Deck();
+                            d.id = (int)reader["id"];
+                            d.Leader = (int)reader["leader_id"];
+                            d.name = (string)reader["name"];
+                            d.color = (string)reader["color"];
+                            d.Cards.Add((int)reader["card_id"], (int)reader["quantity"]);
+                            deck.Add(d);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return deck;  
         }
     }
 }

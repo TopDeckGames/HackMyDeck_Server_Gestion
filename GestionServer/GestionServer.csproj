@@ -106,6 +106,7 @@
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\Deck.cs" />
     <Compile Include="Model\Enhancement.cs" />
+    <Compile Include="Model\History.cs" />
     <Compile Include="Model\Leader.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Model\Server.cs" />

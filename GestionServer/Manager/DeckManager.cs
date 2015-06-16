@@ -29,5 +29,17 @@ namespace GestionServer.Manager
                 return 0;
             }
         }
+
+        public List<Deck> getDecks(int idUser)
+        {
+            try
+            {
+                return AdapterFactory.getDeckAdapter().getDecks(idUser);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

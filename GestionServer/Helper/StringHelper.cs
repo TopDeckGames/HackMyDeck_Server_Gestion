@@ -27,7 +27,10 @@ namespace GestionServer.Helper
         /// <returns>Chaine remplie</returns>
         public static string fillString(string str, int length)
         {
-            str += ( StringHelper.SEPARATOR * (length - str.Length));
+            while(str.Length < length)
+            {
+                str += StringHelper.SEPARATOR;
+            }
             return str;
         }
     }

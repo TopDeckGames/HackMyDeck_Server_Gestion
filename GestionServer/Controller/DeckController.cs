@@ -14,7 +14,7 @@ namespace GestionServer.Controller
         /// Redirige la requête vers l'action correspondante
         /// </summary>
         /// <param name="stream">Flux de données à traiter</param>
-        public Response parser(Stream stream)
+        public Response parser(User user, Stream stream)
         {
             Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
@@ -26,7 +26,7 @@ namespace GestionServer.Controller
                     switch (idAction)
                     {
                         case 1:
-                            response = this.getCards(reader.ReadInt32());
+                            response = this.getCards(user.Id);
                             break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);

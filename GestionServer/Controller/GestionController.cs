@@ -16,7 +16,7 @@ namespace GestionServer.Controller
         /// Redirige la requête vers l'action correspondante
         /// </summary>
         /// <param name="stream">Flux de données à traiter</param>
-        public Response parser(Stream stream)
+        public Response parser(User user, Stream stream)
         {
             Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
@@ -29,13 +29,13 @@ namespace GestionServer.Controller
                     {
                         case 1:
                             response = this.enterCombatAction(
-                                reader.ReadInt32(), 
+                                user.Id, 
                                 reader.ReadInt32(),
                                 reader.ReadUInt32()
                                 );
                             break;
                         case 2:
-                            response = this.leaveCombatAction(reader.ReadInt32());
+                            response = this.leaveCombatAction(user.Id);
                             break;
                         case 3:
                             response = this.getCards();

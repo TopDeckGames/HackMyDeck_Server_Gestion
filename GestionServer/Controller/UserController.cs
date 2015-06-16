@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using GestionServer.Manager;
 using GestionServer.Model;
+using GestionServer.Helper;
 
 namespace GestionServer.Controller
 {
@@ -14,7 +15,7 @@ namespace GestionServer.Controller
         /// Redirige la requête vers l'action correspondante
         /// </summary>
         /// <param name="stream">Flux de données à traiter</param>
-        public Response parser(Stream stream)
+        public Response parser(User user, Stream stream)
         {
             Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
@@ -26,16 +27,16 @@ namespace GestionServer.Controller
                     switch (idAction)
                     {
                         case 1:
-                            response = this.getStructures(reader.ReadInt32());
+                            response = this.getStructures(user.Id);
                             break;
                         case 2:
-                            response = this.buyLeader(reader.ReadInt32(), reader.ReadInt32());
+                            response = this.buyLeader(user.Id, reader.ReadInt32());
                             break;
                         case 3:
-                            response = this.buyCard(reader.ReadInt32(), reader.ReadInt32());
+                            response = this.buyCard(user.Id, reader.ReadInt32());
                             break;
                         case 4:
-                            response = this.getInfos(reader.ReadInt32());
+                            response = this.getInfos(user.Id);
                             break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
@@ -151,7 +152,7 @@ namespace GestionServer.Controller
 
             try
             {
-                ManagerFactory.getUserManager().getUser(idUser);
+                user = ManagerFactory.getUserManager().getUser(idUser);
             }
             catch(Exception e)
             {
@@ -166,7 +167,7 @@ namespace GestionServer.Controller
             {
                 response.addValue(1);
 
-                response.addValue(user.Login);
+                response.addValue(StringHelper.fillString(user.Login, User.LOGIN_LENGTH));
                 response.addValue(user.Credit);
             }
 

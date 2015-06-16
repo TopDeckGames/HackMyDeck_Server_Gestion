@@ -19,7 +19,7 @@ namespace GestionServer.Data
             List<Structure> structures = new List<Structure>();
 
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT `id`, `name`, `type`, `description` FROM `structure`";
+            cmd.CommandText = "SELECT `id`, `name`, `type`, `description`, `posX`, `posY`, `width`, `height` FROM `structure`";
 
             try
             {
@@ -35,6 +35,10 @@ namespace GestionServer.Data
                             structure.Name = (string)reader["name"];
                             structure.Description = (string)reader["description"];
                             structure.Type = (Structure.TypeBat)reader["type"];
+                            structure.PosX = (float)reader["posX"];
+                            structure.PosY = (float)reader["posY"];
+                            structure.Width = (float)reader["width"];
+                            structure.Height = (float)reader["height"];
 
                             structures.Add(structure);
                         }

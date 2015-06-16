@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="GestionServer.Controller.ControllerFactory">
+    <Position X="21" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAgAAEAAAAAAgAAAACAAQAAAAAAA=</HashCode>
+      <FileName>Controller\ControllerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Controller.DeckController" BaseTypeListCollapsed="true">
+    <Position X="23" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAIAA=</HashCode>
+      <FileName>Controller\DeckController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GestionServer.Controller.GestionController" BaseTypeListCollapsed="true">
+    <Position X="21" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAIACACAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Controller\GestionController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GestionServer.Controller.UserController" BaseTypeListCollapsed="true">
+    <Position X="19" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAIAAggAAIAIAA=</HashCode>
+      <FileName>Controller\UserController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GestionServer.Logger">
+    <Position X="29.25" Y="8.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="GestionServer.Logger.LogType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Logger.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAEAAAAEAACAAAAAAAAAA=</HashCode>
+      <FileName>Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Monitor">
+    <Position X="25.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAkAAgAAAAAMAAAAAA=</HashCode>
+      <FileName>Monitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.MainClass" Collapsed="true">
+    <Position X="23.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAABgAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Response">
+    <Position X="23.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCAAQAAAAAAAAAAAAAgAAAEAAAAAAIAABQAAAAAAAAA=</HashCode>
+      <FileName>Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Server">
+    <Position X="21.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAgAAAAAAAAAAAAAAAAAQAEAkAAgAQAAAMAAAAAA=</HashCode>
+      <FileName>Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.AdapterFactory">
+    <Position X="9.25" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAAAAAAAAIAAgAAACCAACgAgAAAAAAAAAAAgA=</HashCode>
+      <FileName>Data\AdapterFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.BaseAdapter">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\BaseAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.CardAdapter">
+    <Position X="11.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\CardAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.DeckAdapter">
+    <Position X="13.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Data\DeckAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.LeaderAdapter">
+    <Position X="4.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\LeaderAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.StructureAdapter">
+    <Position X="7" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\StructureAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Data.UserAdapter">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Data\UserAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Handlers.ClientHandler">
+    <Position X="18.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAABQAAACAAgCABAAaAAAAAAgEAICIAAAIAA=</HashCode>
+      <FileName>Handlers\ClientHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Handlers.MonitorHandler">
+    <Position X="27.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAIAAAAAAAAQACIAAgYAAAIAAAEAACIAAAAAA=</HashCode>
+      <FileName>Handlers\MonitorHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Helper.ByteArray">
+    <Position X="29.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\ByteArray.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Helper.Checksum">
+    <Position X="27.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Helper\Checksum.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Helper.JsonSerializer">
+    <Position X="27.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\JsonSerializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Helper.StringHelper">
+    <Position X="27.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAQAAA=</HashCode>
+      <FileName>Helper\StringHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.CardManager">
+    <Position X="5.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manager\CardManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.DeckManager">
+    <Position X="4" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manager\DeckManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.LeaderManager">
+    <Position X="7.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Manager\LeaderManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.ManagerFactory">
+    <Position X="9.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAEAAAAAAAAAAACBIgABAIAJAAgIAAAAAAAA=</HashCode>
+      <FileName>Manager\ManagerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.MasterManager">
+    <Position X="14.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAIBBAAAAAAQAAAAAAIAAAAAAAIAEAQABAAEA=</HashCode>
+      <FileName>Manager\MasterManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.ResearchManager">
+    <Position X="12.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manager\ResearchManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.StructureManager">
+    <Position X="11" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manager\StructureManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Manager.UserManager">
+    <Position X="9.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Manager\UserManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Card">
+    <Position X="25.75" Y="14.5" Width="2" />
+    <NestedTypes>
+      <Enum Name="GestionServer.Model.Card.TypeRarity" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Card.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="GestionServer.Model.Card.TypeCard" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Card.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAgAEAAAAAAAAAAAAAARAgAAUAAAAAgAAA=</HashCode>
+      <FileName>Model\Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Deck">
+    <Position X="30.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Deck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Enhancement">
+    <Position X="23.25" Y="18.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQggAAAAAAAAABQAAAAAAAgAAAAAAAAAAQA=</HashCode>
+      <FileName>Model\Enhancement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Leader">
+    <Position X="30.25" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQggIAAAAAAEAAQAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Leader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Request">
+    <Position X="30.5" Y="17.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="GestionServer.Model.Request.TypeRequest" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Request.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Server">
+    <Position X="28.25" Y="16.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="GestionServer.Model.Server.ServerType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Server.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAARACABAAAACAQAAAAAACAA=</HashCode>
+      <FileName>Model\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.Structure">
+    <Position X="28" Y="19.5" Width="2" />
+    <NestedTypes>
+      <Enum Name="GestionServer.Model.Structure.TypeBat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Structure.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAQAAAAAAAgAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\Structure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.User">
+    <Position X="25.75" Y="18.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAECAAAAAAAFJCAAAAAAAEAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionServer.Model.UserStructure">
+    <Position X="28.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAABAAAAAAAAAAgAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Model\UserStructure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="GestionServer.IController">
+    <Position X="21.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Controller\IController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

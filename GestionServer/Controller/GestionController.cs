@@ -211,6 +211,10 @@ namespace GestionServer.Controller
                     response.addValue(StringHelper.fillString(structure.Name, Structure.NAME_LENGTH));
                     response.addValue(StringHelper.fillString(structure.Description, Structure.DESCRIPTION_LENGTH));
                     response.addValue((int)structure.Type);
+                    response.addValue(structure.PosX);
+                    response.addValue(structure.PosY);
+                    response.addValue(structure.Width);
+                    response.addValue(structure.Height);
                 }
             }
 

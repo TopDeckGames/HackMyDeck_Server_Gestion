@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using GestionServer.Manager;
 using GestionServer.Model;
+using GestionServer.Helper;
 
 namespace GestionServer.Controller
 {
@@ -14,7 +15,7 @@ namespace GestionServer.Controller
         /// Redirige la requête vers l'action correspondante
         /// </summary>
         /// <param name="stream">Flux de données à traiter</param>
-        public Response parser(Stream stream)
+        public Response parser(User user, Stream stream)
         {
             Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
@@ -26,13 +27,16 @@ namespace GestionServer.Controller
                     switch (idAction)
                     {
                         case 1:
-                            response = this.getStructures(reader.ReadInt32());
+                            response = this.getStructures(user.Id);
                             break;
                         case 2:
-                            response = this.buyLeader(reader.ReadInt32(), reader.ReadInt32());
+                            response = this.buyLeader(user.Id, reader.ReadInt32());
                             break;
                         case 3:
-                            response = this.buyCard(reader.ReadInt32(), reader.ReadInt32());
+                            response = this.buyCard(user.Id, reader.ReadInt32());
+                            break;
+                        case 4:
+                            response = this.getInfos(user.Id);
                             break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
@@ -86,7 +90,7 @@ namespace GestionServer.Controller
 
                 //Ajout des valeurs des structures
                 foreach(var structure in structures)
-        {
+                {
                     response.addValue(structure.IdStructure);
                     response.addValue(structure.Level);
                     response.addValue(structure.Locked);
@@ -106,14 +110,17 @@ namespace GestionServer.Controller
         private Response buyLeader(int idUser, int idLeader)
         {
             Response response = new Response();
+            response.openWriter();
 
             try
             {
                 ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
-        }
-            catch
+                response.addValue(1);
+            }
+            catch(Exception e)
             {
-
+                Logger.log(typeof(LeaderManager), "Impossible d'acheter le leader : " + e.Message, Logger.LogType.Error);
+                response.addValue(0);
             }
 
             return response;
@@ -131,9 +138,39 @@ namespace GestionServer.Controller
 
             return response;
         }
-        public Response getInfos(int idUser)
+
+        /// <summary>
+        /// Récupère les informations de l'utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Réponse</returns>
+        private Response getInfos(int idUser)
         {
-            Response response = null;
+            User user = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                user = ManagerFactory.getUserManager().getUser(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(UserManager), "Impossible de récupèrer les informations de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+            
+            if(user == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                response.addValue(StringHelper.fillString(user.Login, User.LOGIN_LENGTH));
+                response.addValue(user.Credit);
+            }
+
             return response;
         }
     }

@@ -10,8 +10,9 @@ namespace GestionServer.Data
     public class CardAdapter : BaseAdapter
     {
         /// <summary>
-        /// Renvoie la liste de toutes les cartes
+        /// Récupère l'ensemble des cartes du jeu
         /// </summary>
+        /// <param name="idCard">idCard.</param>
         public List<Card> getCards()
         {
             MySqlCommand cmd = base.connection.CreateCommand();
@@ -28,17 +29,16 @@ namespace GestionServer.Data
                         {
                             Card card = new Card();
                             card.Id = (int)reader["id"];
-                            card.Titre = (string)reader["title"];
-                            card.Type = (GestionServer.Model.Card.TypeCard)reader["type"];
+                            card.Title = (string)reader["title"];
+                            card.Type = (Card.TypeCard)reader["type"];
                             card.Description = (string)reader["description"];
                             card.CostInGame = (int)reader["cost_in_game"];
                             card.CostInStore = (int)reader["cost_in_store"];
                             card.IsBuyable = (Boolean)reader["is_buyable"];
-                            card.Rarity = (GestionServer.Model.Card.TypeRarity)reader["rarity"];
+                            card.Rarity = (Card.TypeRarity)reader["rarity"];
                             cartes.Add(card);
                         }
                     }
-                return cartes;
                 }
             }
             catch
@@ -49,20 +49,22 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
+
+            return cartes;
         }
 
-
         /// <summary>
-        /// Renvoie la liste des cartes possédées par l'utilisateur
+        /// Récupère les cartes possèdées par un utilisateur
         /// </summary>
-        /// <param name="idUser">idUser.</param>
-        public List<Card> getOwnedCards(int idUser)
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Liste des cartes ainsi que leur quantité</returns>
+        public Dictionary<Card, int> getOwnedCards(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT c.id, c.title, c.type, c.description, c.cost_in_game, c.cost_in_store, c.is_buyable, c.rarity FROM card c INNER JOIN user_card u ON c.id = u.card_id WHERE u.user_id = @idUser";
+            cmd.CommandText = "SELECT c.id, u.quantity FROM card c INNER JOIN user_card u ON c.id = u.card_id WHERE u.user_id = @idUser";
             cmd.Parameters.AddWithValue("@idUser", idUser);
 
-            List<Card> cartes = null;
+            Dictionary<Card, int> cartes = null;
             try
             {
                 base.connection.Open();
@@ -74,14 +76,7 @@ namespace GestionServer.Data
                         {
                             Card card = new Card();
                             card.Id = (int)reader["id"];
-                            card.Titre = (string)reader["title"];
-                            card.Type = (GestionServer.Model.Card.TypeCard)reader["type"];
-                            card.Description = (string)reader["description"];
-                            card.CostInGame = (int)reader["cost_in_game"];
-                            card.CostInStore = (int)reader["cost_in_store"];
-                            card.IsBuyable = (Boolean)reader["is_buyable"];
-                            card.Rarity = (GestionServer.Model.Card.TypeRarity)reader["rarity"];
-                            cartes.Add(card);
+                            cartes.Add(card, (int)reader["quantity"]);
                         }
                     }
                     return cartes;

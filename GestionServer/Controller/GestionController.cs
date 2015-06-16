@@ -16,7 +16,7 @@ namespace GestionServer.Controller
         /// Redirige la requête vers l'action correspondante
         /// </summary>
         /// <param name="stream">Flux de données à traiter</param>
-        public Response parser(Stream stream)
+        public Response parser(User user, Stream stream)
         {
             Response response = null;
             using (BinaryReader reader = new BinaryReader(stream))
@@ -29,13 +29,13 @@ namespace GestionServer.Controller
                     {
                         case 1:
                             response = this.enterCombatAction(
-                                reader.ReadInt32(), 
+                                user.Id, 
                                 reader.ReadInt32(),
                                 reader.ReadUInt32()
                                 );
                             break;
                         case 2:
-                            response = this.leaveCombatAction(reader.ReadInt32());
+                            response = this.leaveCombatAction(user.Id);
                             break;
                         case 3:
                             response = this.getCards();
@@ -142,7 +142,38 @@ namespace GestionServer.Controller
         /// <returns>Response</returns>
         private Response getCards()
         {
+            List<Card> cards = null;
             Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                cards = ManagerFactory.getCardManager().getCards();
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(CardManager), "Impossible de récupèrer l'ensemble des cartes : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(cards == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach (var card in cards)
+                {
+                    response.addValue(card.Id);
+                    response.addValue(StringHelper.fillString(card.Title, Card.TITLE_LENGTH));
+                    response.addValue(StringHelper.fillString(card.Description, Card.DESCRIPTION_LENGTH));
+                    response.addValue((int)card.Rarity);
+                    response.addValue(card.CostInGame);
+                    response.addValue(card.CostInStore);
+                    response.addValue(card.IsBuyable);
+                }
+            }
 
             return response;
         }
@@ -180,6 +211,10 @@ namespace GestionServer.Controller
                     response.addValue(StringHelper.fillString(structure.Name, Structure.NAME_LENGTH));
                     response.addValue(StringHelper.fillString(structure.Description, Structure.DESCRIPTION_LENGTH));
                     response.addValue((int)structure.Type);
+                    response.addValue(structure.PosX);
+                    response.addValue(structure.PosY);
+                    response.addValue(structure.Width);
+                    response.addValue(structure.Height);
                 }
             }
 

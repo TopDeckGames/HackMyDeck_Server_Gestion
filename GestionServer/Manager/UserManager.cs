@@ -15,7 +15,7 @@ namespace GestionServer.Manager
         /// </summary>
         /// <returns>Un utilisteur</returns>
         /// <param name="idUtilisateur">IdUtilisateur</param>
-        public User getUser(string idUtilisateur)
+        public User getUser(int idUtilisateur)
         {
             try
             {

@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="GestionServer.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Keys\monitoring.xml">

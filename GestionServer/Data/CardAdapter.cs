@@ -39,7 +39,6 @@ namespace GestionServer.Data
                             cartes.Add(card);
                         }
                     }
-                return cartes;
                 }
             }
             catch
@@ -50,6 +49,8 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
+
+            return cartes;
         }
 
         /// <summary>

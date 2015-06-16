@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 using System.Data;
+using GestionServer.Model;
 
 namespace GestionServer.Data
 {
@@ -43,6 +44,51 @@ namespace GestionServer.Data
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Récupère l'ensemble des leaders du jeu
+        /// </summary>
+        /// <returns>Liste des leaders</returns>
+        public List<Leader> getLeaders()
+        {
+            List<Leader> leaders = new List<Leader>();
+
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT `id`, `name`, `description`, `effect`, `energy`, `price` FROM `leader`";
+            
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Leader leader = new Leader();
+                            leader.Id = (int)reader["id"];
+                            leader.Name = (string)reader["name"];
+                            leader.Description = (string)reader["description"];
+                            leader.Price = (int)reader["price"];
+                            leader.Energy = (int)reader["energy"];
+                            leader.Effect = (string)reader["effect"];
+
+                            leaders.Add(leader);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return leaders;
         }
     }
 }

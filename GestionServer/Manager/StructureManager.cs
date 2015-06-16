@@ -9,6 +9,8 @@ namespace GestionServer.Manager
 {
     public class StructureManager
     {
+        private List<Structure> structures;
+
         /// <summary>
         /// Récupère le détail des structures de l'utilisateur
         /// </summary>
@@ -32,14 +34,19 @@ namespace GestionServer.Manager
         /// <returns>Liste de structures</returns>
         public List<Structure> getStructures()
         {
-            try
+            if (this.structures == null)
             {
-                return AdapterFactory.getStructureAdapter().getStructures();
+                try
+                {
+                    this.structures = AdapterFactory.getStructureAdapter().getStructures();
+                }
+                catch
+                {
+                    throw;
+                }
             }
-            catch
-            {
-                throw;
-            }
+
+            return this.structures;
         }
     }
 }

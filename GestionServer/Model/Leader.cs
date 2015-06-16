@@ -11,6 +11,7 @@ namespace GestionServer.Model
         public const int DESCRIPTION_LENGTH = 255;
         public const int EFFECT_LENGTH = 50;
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Effect { get; set; }

@@ -9,13 +9,16 @@ namespace GestionServer.Manager
 {
     public class CardManager
     {
+        private List<Card> cards;
+
         /// <summary>
         /// Récupère les cartes possédées par l'utilisateur
         /// </summary>
         /// <returns>Une liste de carte possédées par le joueur</returns>
         /// <param name="idUser">idUser</param>
-       public Dictionary<Card, int> getOwnedCards(int idUser) {
-          try
+        public Dictionary<Card, int> getOwnedCards(int idUser)
+        {
+            try
             {
                 return AdapterFactory.getCardAdapter().getOwnedCards(idUser);
             }
@@ -46,7 +49,7 @@ namespace GestionServer.Manager
         /// </summary>
         /// <param name="idUser">idUser</param>
         /// <param name="idCard">idCard</param>
-        /* public void addCard(int idUser, int idCard) {
+        /*public void addCard(int idUser, int idCard) {
           try
             {
                 return AdapterFactory.getUserAdapter().addCard(idUser, idCard);
@@ -59,19 +62,24 @@ namespace GestionServer.Manager
 
 
         /// <summary>
-        /// Récupère une carte
+        /// Récupère toutes les cartes du jeu
         /// </summary>
         /// <returns>Liste de toute les cartes</returns>
-        public List<Card> getCards() {
-          try
+        public List<Card> getCards()
+        {
+            if(this.cards == null)
             {
-                return AdapterFactory.getCardAdapter().getCards();
+                try
+                {
+                    this.cards = AdapterFactory.getCardAdapter().getCards();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-  }
-}
 
+            return this.cards;
+        }
+    }
+}

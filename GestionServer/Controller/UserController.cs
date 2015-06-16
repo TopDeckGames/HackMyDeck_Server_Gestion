@@ -34,6 +34,9 @@ namespace GestionServer.Controller
                         case 3:
                             response = this.buyCard(reader.ReadInt32(), reader.ReadInt32());
                             break;
+                        case 4:
+                            response = this.getInfos(reader.ReadInt32());
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -106,14 +109,17 @@ namespace GestionServer.Controller
         private Response buyLeader(int idUser, int idLeader)
         {
             Response response = new Response();
+            response.openWriter();
 
             try
             {
                 ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
+                response.addValue(1);
             }
-            catch
+            catch(Exception e)
             {
-
+                Logger.log(typeof(LeaderManager), "Impossible d'acheter le leader : " + e.Message, Logger.LogType.Error);
+                response.addValue(0);
             }
 
             return response;
@@ -132,9 +138,38 @@ namespace GestionServer.Controller
             return response;
         }
 
-        public Response getInfos(int idUser)
+        /// <summary>
+        /// Récupère les informations de l'utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Réponse</returns>
+        private Response getInfos(int idUser)
         {
-            Response response = null;
+            User user = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                ManagerFactory.getUserManager().getUser(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(UserManager), "Impossible de récupèrer les informations de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+            
+            if(user == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                response.addValue(user.Login);
+                response.addValue(user.Credit);
+            }
+
             return response;
         }
     }

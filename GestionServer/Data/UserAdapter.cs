@@ -19,7 +19,7 @@ namespace GestionServer.Data
         /// Renvoie les informations utilistateurs
         /// </summary>
         /// <param name="idUtilisateur">idUtilisateur.</param>
-        public User getInfos(string idUtilisateur)
+        public User getInfos(int idUtilisateur)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
             cmd.CommandText = "SELECT username, credit FROM user WHERE id = @idUtilisateur";

@@ -10,9 +10,8 @@ namespace GestionServer.Data
     public class CardAdapter : BaseAdapter
     {
         /// <summary>
-        /// Renvoie la carte
+        /// Renvoie la liste de toutes les cartes
         /// </summary>
-        /// <param name="idCard">idCard.</param>
         public List<Card> getCards()
         {
             MySqlCommand cmd = base.connection.CreateCommand();
@@ -52,6 +51,11 @@ namespace GestionServer.Data
             }
         }
 
+
+        /// <summary>
+        /// Renvoie la liste des cartes possédées par l'utilisateur
+        /// </summary>
+        /// <param name="idUser">idUser.</param>
         public List<Card> getOwnedCards(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();

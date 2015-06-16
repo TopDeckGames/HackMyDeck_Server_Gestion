@@ -50,5 +50,15 @@ namespace GestionServer.Data
                 base.connection.Close();
             }
         }
+        
+        
+        /// <summary>
+        /// Renvoie le resultats des 10 derniers matchs jouée par le joueur
+        /// </summary>
+        /// <param name="idUtilisateur">idUtilisateur.</param>
+        public List<Object> getHistory(string idUtilisateur)
+        {
+            return null;
+        }
     }
 }

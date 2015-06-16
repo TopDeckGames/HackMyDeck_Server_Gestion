@@ -26,5 +26,17 @@ namespace GestionServer.Manager
                 throw e;
             }
         }
+
+        public List<Object> getHitory(string idUtilisateur)
+        {
+            try
+            {
+                return AdapterFactory.getUserAdapter().getHistory(idUtilisateur);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -90,5 +90,39 @@ namespace GestionServer.Data
 
             return leaders;
         }
+
+        public List<int> getOwnedLeaders(int idUser)
+        {
+            List<int> leaders = new List<int>();
+
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT l.leader_id FROM user u INNER JOIN user_leaders l ON u.id = l.user_id WHERE u.id = @idUser";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            leaders.Add((int)reader["leader_id"]);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return leaders;
+        }
     }
 }

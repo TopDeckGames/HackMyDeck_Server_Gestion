@@ -92,5 +92,10 @@ namespace GestionServer.Data
 
             return cartes;
         }
+
+        public List<Card> getUnlockedCards(int idUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

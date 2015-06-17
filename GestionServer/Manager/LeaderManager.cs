@@ -48,5 +48,23 @@ namespace GestionServer.Manager
 
             return this.leaders;
         }
+
+        /// <summary>
+        /// Retourne la liste de tous les leaders disponible par un joueur.
+        /// </summary>
+        /// <returns>Liste de leaders posédées.</returns>
+        public List<int> getOwnedLeaders(int idUser)
+        {
+
+                try
+                {
+                    return AdapterFactory.getLeaderAdapter().getOwnedLeaders(idUser);
+                }
+                catch
+                {
+                    return null;
+                    throw;
+                }
+        }
     }
 }

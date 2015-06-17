@@ -9,6 +9,7 @@ namespace GestionServer.Data
         private static LeaderAdapter leaderAdapter;
         private static StructureAdapter structureAdapter;
         private static CardAdapter cardAdapter;
+        private static ResearchAdapter researchAdapter;
 
         /// <summary>
         /// Retourne l'instance de l'adapter des utilisateurs
@@ -73,6 +74,16 @@ namespace GestionServer.Data
                 AdapterFactory.structureAdapter = new StructureAdapter();
             }
             return AdapterFactory.structureAdapter;
+        }
+
+        public static ResearchAdapter getResearchAdapter()
+        {
+
+            if (AdapterFactory.researchAdapter == null)
+            {
+                AdapterFactory.researchAdapter = new ResearchAdapter();
+            }
+            return AdapterFactory.researchAdapter;
         }
     }
 }

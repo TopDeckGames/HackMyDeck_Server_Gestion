@@ -65,7 +65,6 @@ namespace GestionServer.Manager
             return ManagerFactory.structureManager;
         }
 
-        /*
 
         /// <summary>
         /// Recupère le manager des recherches
@@ -80,7 +79,6 @@ namespace GestionServer.Manager
             return ManagerFactory.researchManager;
         }
 
-         */
 
         /// <summary>
         /// Retourne le manager des decks

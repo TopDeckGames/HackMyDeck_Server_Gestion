@@ -44,22 +44,6 @@ namespace GestionServer.Manager
             }
         } */
 
-        /// <summary>
-        /// Ajoute une carte au deck de l'utilisateur
-        /// </summary>
-        /// <param name="idUser">idUser</param>
-        /// <param name="idCard">idCard</param>
-        /*public void addCard(int idUser, int idCard) {
-          try
-            {
-                return AdapterFactory.getUserAdapter().addCard(idUser, idCard);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        } */
-
 
         /// <summary>
         /// Récupère toutes les cartes du jeu

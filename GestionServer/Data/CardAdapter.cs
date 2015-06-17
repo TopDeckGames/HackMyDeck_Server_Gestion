@@ -17,7 +17,7 @@ namespace GestionServer.Data
         {
             MySqlCommand cmd = base.connection.CreateCommand();
             cmd.CommandText = "SELECT * FROM card";
-            List<Card> cartes = null;
+            List<Card> cartes = new List<Card>();
             try
             {
                 base.connection.Open();
@@ -57,14 +57,14 @@ namespace GestionServer.Data
         /// Récupère les cartes possèdées par un utilisateur
         /// </summary>
         /// <param name="idUser">Identifiant de l'utilisateur</param>
-        /// <returns>C:\Users\Pierre\Desktop\HMD\HackMyDeck_Server_Gestion\GestionServer\Model\Card.csListe des cartes ainsi que leur quantité</returns>
+        /// <returns>Liste des cartes ainsi que leur quantité</returns>
         public Dictionary<Card, int> getOwnedCards(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
             cmd.CommandText = "SELECT c.id, u.quantity FROM card c INNER JOIN user_card u ON c.id = u.card_id WHERE u.user_id = @idUser";
             cmd.Parameters.AddWithValue("@idUser", idUser);
 
-            Dictionary<Card, int> cartes = null;
+            Dictionary<Card, int> cartes = new Dictionary<Card, int>();
             try
             {
                 base.connection.Open();
@@ -78,8 +78,7 @@ namespace GestionServer.Data
                             card.Id = (int)reader["id"];
                             cartes.Add(card, (int)reader["quantity"]);
                         }
-                    }
-                    return cartes;
+                    }  
                 }
             }
             catch
@@ -90,6 +89,8 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
+
+            return cartes;
         }
     }
 }

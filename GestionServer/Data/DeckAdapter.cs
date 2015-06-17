@@ -50,7 +50,7 @@ namespace GestionServer.Data
             MySqlCommand cmd = base.connection.CreateCommand();
             cmd.CommandText = "SELECT d.*, de.quantity FROM user u INNER JOIN deck d ON u.id = d.user_id INNER JOIN deck_card de ON d.id = de.deck_id WHERE u.id = @idUser";
             cmd.Parameters.AddWithValue("@idUser", idUser);
-            List<Deck> deck = null;
+            List<Deck> deck = new List<Deck>();
 
             try
             {

@@ -57,12 +57,12 @@ namespace GestionServer.Data
         /// Renvoie le resultats des 10 derniers matchs jouée par le joueur
         /// </summary>
         /// <param name="idUtilisateur">idUtilisateur.</param>
-        public List<History> getHistory(string idUtilisateur)
+        public List<History> getHistory(int idUtilisateur)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT game.* FROM game, deck WHERE deck.user_id = @userIdAND (game.firstToPlay_id = deck. game.secondToPlay_id = deck.user_id) ORDER BY game.created DESC limit 10";
-            cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
-            List<History> historique = null;
+            cmd.CommandText = "SELECT game.* FROM game, deck WHERE deck.user_id = @userId AND (game.firstToPlay_id = deck.user_id OR game.secondToPlay_id = deck.user_id) ORDER BY game.created DESC limit 10";
+            cmd.Parameters.AddWithValue("@userId", idUtilisateur);
+            List<History> historique = new List<History>();
 
             try
             {

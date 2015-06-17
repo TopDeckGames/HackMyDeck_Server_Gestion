@@ -27,7 +27,7 @@ namespace GestionServer.Manager
             }
         }
 
-        public List<History> getHitory(string idUtilisateur)
+        public List<History> getHistory(int idUtilisateur)
         {
             try
             {

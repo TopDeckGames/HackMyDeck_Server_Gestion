@@ -89,6 +89,7 @@
     <Compile Include="Data\CardAdapter.cs" />
     <Compile Include="Data\DeckAdapter.cs" />
     <Compile Include="Data\LeaderAdapter.cs" />
+    <Compile Include="Data\ResearchAdapter.cs" />
     <Compile Include="Data\StructureAdapter.cs" />
     <Compile Include="Data\UserAdapter.cs" />
     <Compile Include="Helper\ByteArray.cs" />
@@ -109,9 +110,12 @@
     <Compile Include="Model\History.cs" />
     <Compile Include="Model\Leader.cs" />
     <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\Research.cs" />
     <Compile Include="Model\Server.cs" />
+    <Compile Include="Model\SkillTrees.cs" />
     <Compile Include="Model\Structure.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserSkillTrees.cs" />
     <Compile Include="Model\UserStructure.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\MonitorHandler.cs" />

@@ -43,6 +43,9 @@ namespace GestionServer.Controller
                         case 4:
                             response = this.getStructures();
                             break;
+                        case 5:
+                            response = this.getLeaders();
+                            break;
                         default:
                             Logger.log(typeof(GestionController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -215,6 +218,47 @@ namespace GestionServer.Controller
                     response.addValue(structure.PosY);
                     response.addValue(structure.Width);
                     response.addValue(structure.Height);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Récupère l'ensemble des leaders du jeu
+        /// </summary>
+        /// <returns>Response</returns>
+        private Response getLeaders()
+        {
+            List<Leader> leaders = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                leaders = ManagerFactory.getLeaderManager().getLeaders();
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(LeaderManager), "Impossible de récupèrer l'ensemble des leaders : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(leaders == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(var leader in leaders)
+                {
+                    response.addValue(leader.Id);
+                    response.addValue(StringHelper.fillString(leader.Name, Leader.NAME_LENGTH));
+                    response.addValue(StringHelper.fillString(leader.Description, Leader.DESCRIPTION_LENGTH));
+                    response.addValue(leader.Price);
+                    response.addValue(leader.Energy);
+                    response.addValue(StringHelper.fillString(leader.Effect, Leader.EFFECT_LENGTH));
                 }
             }
 

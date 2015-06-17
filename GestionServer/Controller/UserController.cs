@@ -38,6 +38,8 @@ namespace GestionServer.Controller
                         case 4:
                             response = this.getInfos(user.Id);
                             break;
+                        case 5:
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -170,6 +172,15 @@ namespace GestionServer.Controller
                 response.addValue(StringHelper.fillString(user.Login, User.LOGIN_LENGTH));
                 response.addValue(user.Credit);
             }
+
+            return response;
+        }
+
+        private Response getLeaders(int idUser)
+        {
+            List<Leader> leaders = null;
+            Response response = new Response();
+            response.openWriter();
 
             return response;
         }

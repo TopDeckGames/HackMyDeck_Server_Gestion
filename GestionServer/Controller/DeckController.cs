@@ -28,6 +28,9 @@ namespace GestionServer.Controller
                         case 1:
                             response = this.getCards(user.Id);
                             break;
+                        case 2:
+                            response = this.getDecks(user.Id);
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -50,9 +53,49 @@ namespace GestionServer.Controller
 
         }
 
-        private void getDecks(int idUser)
+        /// <summary>
+        /// Recupère l'ensemble des decks d'un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Response</returns>
+        private Response getDecks(int idUser)
         {
+            List<Deck> decks = null;
+            Response response = new Response();
+            response.openWriter();
 
+            try
+            {
+                decks = ManagerFactory.getDeckManager().getDecks(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(DeckManager), "Impossible de récupèrer les decks de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(decks == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(var deck in decks)
+                {
+                    response.addValue(deck.id);
+                    response.addValue(deck.Leader);
+                    response.addValue(deck.Cards.Count);
+
+                    foreach(KeyValuePair<int, int> value in deck.Cards)
+                    {
+                        response.addValue(value.Key);
+                        response.addValue(value.Value);
+                    }
+                }
+            }
+
+            return response;
         }
 
         /// <summary>

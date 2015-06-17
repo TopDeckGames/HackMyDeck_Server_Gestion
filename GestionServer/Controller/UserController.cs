@@ -39,6 +39,7 @@ namespace GestionServer.Controller
                             response = this.getInfos(user.Id);
                             break;
                         case 5:
+                            response = this.getHistory(user.Id);
                             break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
@@ -55,11 +56,6 @@ namespace GestionServer.Controller
                 }
             }
             return response;
-        }
-
-        private void getHistory(int idUser)
-        {
-
         }
 
         /// <summary>
@@ -181,6 +177,71 @@ namespace GestionServer.Controller
             List<Leader> leaders = null;
             Response response = new Response();
             response.openWriter();
+
+            return response;
+        }
+
+        /// <summary>
+        /// Récupère l'historique des parties d'un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Response</returns>
+        private Response getHistory(int idUser)
+        {
+            List<History> history = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                history = ManagerFactory.getUserManager().getHistory(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(UserManager), "Impossible de récupèrer l'historique de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(history == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach (var item in history)
+                {
+                    int id = item.firstToPlay_id == idUser ? item.secondToPlay_id : item.firstToPlay_id;
+                    User ennemy = null;
+
+                    try
+                    {
+                        ennemy = ManagerFactory.getUserManager().getUser(id);
+                    }
+                    catch(Exception e)
+                    {
+                        Logger.log(typeof(UserManager), "Impossible de récupèrer les informations de l'utilisateur : " + e.Message, Logger.LogType.Error);
+                    }
+
+                    String ennemyName;
+                    if (ennemy == null)
+                    {
+                        ennemyName = "Inconnu";
+                    }
+                    else
+                    {
+                        ennemyName = ennemy.Login;
+                    }
+
+                    response.addValue(item.id);
+                    response.addValue(StringHelper.fillString(ennemyName, User.LOGIN_LENGTH));
+                    response.addValue((Int32)item.created.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                    response.addValue(item.totalDamage);
+                    response.addValue(item.totalTechno);
+                    response.addValue(item.totalUnit);
+                    response.addValue(item.winner.Equals(idUser));
+                }
+            }
 
             return response;
         }

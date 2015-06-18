@@ -30,6 +30,11 @@ namespace GestionServer.Manager
             }
         }
 
+        /// <summary>
+        /// Récupère les decks d'un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Liste de deck</returns>
         public List<Deck> getDecks(int idUser)
         {
             try
@@ -39,6 +44,44 @@ namespace GestionServer.Manager
             catch
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Sauvegarde l'état d'un deck
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="deck">Deck à enregistrer</param>
+        public void saveDeck(int idUser, Deck deck)
+        {
+            try
+            {
+                Dictionary<Card, int> userCards = AdapterFactory.getCardAdapter().getOwnedCards(idUser);       
+
+                //On vérifie que l'utilisateur possède les cartes du deck
+                foreach (KeyValuePair<int, int> pair in deck.Cards)
+                {
+                    bool flag = false;
+                    foreach(KeyValuePair<Card, int> userPair in userCards)
+                    {
+                        if(userPair.Key.Id.Equals(pair.Key) && userPair.Value.Equals(pair.Value))
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if(!flag)
+                    {
+                        throw new Exception("L'utilisateur ne possède pas les cartes requises");
+                    }
+                }
+
+                AdapterFactory.getDeckAdapter().saveDeck(deck);
+            }
+            catch
+            {
+                throw;
             }
         }
     }

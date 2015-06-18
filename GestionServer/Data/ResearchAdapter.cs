@@ -1,4 +1,4 @@
-using GestionServer.Model;
+﻿using GestionServer.Model;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -93,15 +93,6 @@ namespace GestionServer.Data
             }
             return skill;
         }
-<<<<<<< HEAD
-        
-        public List<Enhancements> getEnhancements()
-        {
-            MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT en.* FROM user u INNER JOIN user_enhancement e ON u.id = user_id INNER JOIN enhancement en ON e.skill_id = en.id";
-
-            List<Enhancements> enhancement = new List<Enhancements>();
-=======
 
         /// <summary>
         /// Teste si le parent d'un enhancement est débloqué
@@ -112,14 +103,13 @@ namespace GestionServer.Data
         public bool isParentEnhancementUnlocked(int idUser, int idEnhancement)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText =   "SELECT unlocked                                                                                                            " +
+            cmd.CommandText = "SELECT unlocked                                                                                                            " +
                                 "FROM user_enhancement                                                                                                      " +
                                 "WHERE user_enhancement.user_id = @idUser                                                                                   " +
                                 "AND user_enhancement.enhancement_id = (SELECT enhancement.parent_id FROM enhancement WHERE enhancement.id = @idEnhancement)";
             cmd.Parameters.AddWithValue("@idUser", idUser);
             cmd.Parameters.AddWithValue("@idEnhancement", idEnhancement);
 
->>>>>>> origin/master
             try
             {
                 base.connection.Open();
@@ -127,25 +117,8 @@ namespace GestionServer.Data
                 {
                     if (reader.HasRows)
                     {
-<<<<<<< HEAD
-                        while (reader.Read())
-                        {
-                            Enhancement e = new Enhancement();
-                            e.id = (int)reader["id"];
-                            e.name = (string)reader["name"];
-                            e.description = (string)reader["description"];
-                            e.effect = (string)reader["effect"];
-                            e.cost = (int)reader["cost"];
-                            e.time = (int)reader["time"];
-                            e.parent = (int)reader["parent"];
-                            e.skilltree = (int)reader["skilltree"];
-                            
-                            enhancement.Add(e);
-                        }
-=======
                         reader.Read();
                         return (bool)reader["unlocked"];
->>>>>>> origin/master
                     }
                 }
             }
@@ -157,21 +130,6 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
-<<<<<<< HEAD
-            return skill;
-        }
-
-        public List<UserEnhancements> getUserEnhancements(int idUser)
-        {
-            MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT e.* FROM user u INNER JOIN user_enhancement e ON u.id = user_id INNER JOIN enhancement en ON e.enhancement_id = en.id WHERE u.id = @idUser";
-            cmd.Parameters.AddWithValue("@idUser", idUser);
-
-            List<UserEnhancements> userEnhancement = new List<UserEnhancements>();
-            try
-            {
-                base.connection.Open();
-=======
 
             return false;
         }
@@ -194,35 +152,17 @@ namespace GestionServer.Data
                 cmd.Parameters.AddWithValue("@enhancementId", idEnhancement);
 
                 bool exist = false;
->>>>>>> origin/master
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {
-<<<<<<< HEAD
-                        while (reader.Read())
-                        {
-                            UserSkillTrees user = new UserSkillTrees();
-                            user.id = (int)reader["id"];
-                            user.user_id = (int)reader["user_id"];
-                            user.enhancement_id = (int)reader["enhancement_id"];
-                            user.created = (DateTime)reader["created"];
-                            user.updated = (DateTime)reader["updated"];
-                            user.unlocked = (Boolean)reader["unlocked"];
-                            user.on_current_research = (int)reader["on_current_research"];
-                            
-                            userEnhancement.Add(user);
-                        }
-                    }
-                }
-=======
                         reader.Read();
                         exist = (Int64)reader["nb"] > 0;
                     }
                 }
 
                 //On set la nouvelle recherche
-                if(exist)
+                if (exist)
                 {
                     cmd.CommandText = "INSERT INTO user_enhancement(user_id, enhancement_id, unlocked, on_current_research) VALUES (@userId, @enhancementId, 0, 1)";
                 }
@@ -235,7 +175,6 @@ namespace GestionServer.Data
                 //On enlève l'ancienne recherche
                 cmd.CommandText = "UPDATE user_enhancement SET on_current_research = 0 WHERE user_id = @userId AND enhancement_id <> @enhancementId AND on_current_research = 1";
                 cmd.ExecuteNonQuery();
->>>>>>> origin/master
             }
             catch
             {
@@ -244,12 +183,89 @@ namespace GestionServer.Data
             finally
             {
                 base.connection.Close();
-<<<<<<< HEAD
+            }
+        }
+
+        public List<Enhancement> getEnhancements()
+        {
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT en.* FROM user u INNER JOIN user_enhancement e ON u.id = user_id INNER JOIN enhancement en ON e.skill_id = en.id";
+
+            List<Enhancement> enhancement = new List<Enhancement>();
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Enhancement e = new Enhancement();
+                            e.Id = (int)reader["id"];
+                            e.Name = (string)reader["name"];
+                            e.Description = (string)reader["description"];
+                            e.Effect = (string)reader["effect"];
+                            e.Cost = (int)reader["cost"];
+                            e.Time = (int)reader["time"];
+                            e.Parent = (int)reader["parent"];
+                            e.SkillTree = (int)reader["skilltree"];
+
+                            enhancement.Add(e);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+            return enhancement;
+        }
+
+        public List<UserEnhancement> getUserEnhancements(int idUser)
+        {
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT e.* FROM user u INNER JOIN user_enhancement e ON u.id = user_id INNER JOIN enhancement en ON e.enhancement_id = en.id WHERE u.id = @idUser";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+
+            List<UserEnhancement> userEnhancement = new List<UserEnhancement>();
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            UserSkillTrees user = new UserSkillTrees();
+                            user.id = (int)reader["id"];
+                            user.user_id = (int)reader["user_id"];
+                            user.enhancement_id = (int)reader["enhancement_id"];
+                            user.created = (DateTime)reader["created"];
+                            user.updated = (DateTime)reader["updated"];
+                            user.unlocked = (Boolean)reader["unlocked"];
+                            user.on_current_research = (int)reader["on_current_research"];
+
+                            userEnhancement.Add(user);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
             }
             return skill;
-=======
-            }            
->>>>>>> origin/master
         }
     }
 }

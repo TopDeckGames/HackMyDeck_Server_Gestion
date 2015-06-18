@@ -57,6 +57,11 @@ namespace GestionServer.Data
             }
         }
 
+        /// <summary>
+        /// Récupère la liste des decks d'un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Liste de decks</returns>
         public List<Deck> getDecks(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
@@ -74,10 +79,10 @@ namespace GestionServer.Data
                         while (reader.Read()) 
                         {
                             Deck d = new Deck();
-                            d.id = (int)reader["id"];
+                            d.Id = (int)reader["id"];
                             d.Leader = (int)reader["leader_id"];
-                            d.name = (string)reader["name"];
-                            d.color = (string)reader["color"];
+                            d.Name = (string)reader["name"];
+                            d.Color = (string)reader["color"];
                             d.Cards.Add((int)reader["card_id"], (int)reader["quantity"]);
                             deck.Add(d);
                         }
@@ -94,6 +99,43 @@ namespace GestionServer.Data
             }
 
             return deck;  
+        }
+
+        /// <summary>
+        /// Met à jour les valeurs d'un deck
+        /// </summary>
+        /// <param name="deck">Deck à enregistrer</param>
+        public void saveDeck(Deck deck)
+        {
+            try
+            {
+                base.connection.Open();
+
+                //Suppression des cartes liées au deck
+                MySqlCommand cmd = base.connection.CreateCommand();
+                cmd.CommandText = "DELETE FROM deck_card WHERE deck_id = @deckId";
+                cmd.Parameters.AddWithValue("@deckId", deck.Id);
+                cmd.ExecuteNonQuery();
+
+                //Enregistrement des cartes
+                StringBuilder str = new StringBuilder();
+                foreach (KeyValuePair<int, int> pair in deck.Cards)
+                {
+                    str.AppendLine("INSERT INTO`deck_card(deck_id, card_id, quantity) VALUES (@deckId, @cardId" + pair.Key + ", @quantity" + pair.Key + ");");
+                    cmd.Parameters.AddWithValue("@cardId" + pair.Key, pair.Key);
+                    cmd.Parameters.AddWithValue("@quantity" + pair.Key, pair.Value);
+                }
+                cmd.CommandText = str.ToString();
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
         }
     }
 }

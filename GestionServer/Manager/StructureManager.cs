@@ -48,5 +48,37 @@ namespace GestionServer.Manager
 
             return this.structures;
         }
+        
+        /// <summary>
+        /// Upgrade un bâtiment d'un niveau
+        /// </summary>
+        public void lvlUp(int idUser, int idStruct)
+        {
+            User user = new User();
+            List<UserStructure> structure = new List<UserStructure>();
+            int prix = 150;
+
+                try
+                {
+                    user = AdapterFactory.getUserAdapter().getInfos(idUser);
+                    structure = AdapterFactory.getStructureAdapter().getUserStructures(idUser);
+
+                 foreach(UserStructure id in structure) 
+                 {
+                    if (user.Credit >= prix && id.structure_id == idStruct && id.level < 10) 
+                    {
+                        AdapterFactory.getStructureAdapter().lvlUp(idUser, idStruct);
+                        AdapterFactory.getUserAdapter().setCredit(idUser, prix);
+                    }
+                 }
+
+                }
+                catch
+                {
+                    throw;
+                }
+
+        }
     }
+
 }

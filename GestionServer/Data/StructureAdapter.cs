@@ -35,10 +35,10 @@ namespace GestionServer.Data
                             structure.Name = (string)reader["name"];
                             structure.Description = (string)reader["description"];
                             structure.Type = (Structure.TypeBat)reader["type"];
-                            structure.PosX = (float)reader["posX"];
-                            structure.PosY = (float)reader["posY"];
-                            structure.Width = (float)reader["width"];
-                            structure.Height = (float)reader["height"];
+                            structure.PosX = (double)reader["posX"];
+                            structure.PosY = (double)reader["posY"];
+                            structure.Width = (double)reader["width"];
+                            structure.Height = (double)reader["height"];
 
                             structures.Add(structure);
                         }

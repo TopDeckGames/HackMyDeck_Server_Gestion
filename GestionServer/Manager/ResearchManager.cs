@@ -9,19 +9,25 @@ namespace GestionServer.Manager
 {
     public class ResearchManager
     {
+        private static List<SkillTrees> skillTrees;
+
         /// <summary>
         /// Récupère les arbres de talents
         /// </summary>
         public List<SkillTrees> getSkillTrees()
         {
-            try
+            if(ResearchManager.skillTrees == null)
             {
-                return AdapterFactory.getResearchAdapter().getSkillTrees();
+                try
+                {
+                    ResearchManager.skillTrees = AdapterFactory.getResearchAdapter().getSkillTrees();
+                }
+                catch
+                {
+                    throw;
+                }
             }
-            catch
-            {
-                throw;
-            }
+            return ResearchManager.skillTrees;
         }
 
         /// <summary>

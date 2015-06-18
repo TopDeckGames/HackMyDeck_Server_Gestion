@@ -16,9 +16,9 @@ namespace GestionServer.Model
         public string Name { get; set; }
         public TypeBat Type { get; set; }
         public string Description { get; set; }
-        public float PosX { get; set; }
-        public float PosY { get; set; }
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public double PosX { get; set; }
+        public double PosY { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
     }
 }

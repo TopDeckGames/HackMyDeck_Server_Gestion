@@ -115,8 +115,10 @@ namespace GestionServer.Controller
 
             try
             {
-                ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
+                int idDeck = ManagerFactory.getLeaderManager().buyLeader(idUser, idLeader);
                 response.addValue(1);
+                response.addValue(idLeader);
+                response.addValue(idDeck);
             }
             catch(Exception e)
             {

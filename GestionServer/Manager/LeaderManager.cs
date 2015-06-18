@@ -16,11 +16,12 @@ namespace GestionServer.Manager
         /// </summary>
         /// <param name="idUser">Identifiant de l'utilisateur</param>
         /// <param name="idLeader">Identifiant du leader</param>
-        public void buyLeader(int idUser, int idLeader)
+        /// <returns>Identifiant du deck associé</returns>
+        public int buyLeader(int idUser, int idLeader)
         {
             if(!AdapterFactory.getLeaderAdapter().haveLeader(idUser, idLeader))
             {
-                ManagerFactory.getDeckManager().addDeck(idUser, idLeader);
+                return ManagerFactory.getDeckManager().addDeck(idUser, idLeader);
             }
             else
             {

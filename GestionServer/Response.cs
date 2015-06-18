@@ -184,6 +184,22 @@ namespace GestionServer
         }
 
         /// <summary>
+        /// Ajoute un double à la réponse
+        /// </summary>
+        /// <param name="value">Double</param>
+        public void addValue(double value)
+        {
+            try
+            {
+                this.writer.Write(value);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retourne la réponse au format binaire
         /// </summary>
         /// <returns>Réponse</returns>

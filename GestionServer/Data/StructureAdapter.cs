@@ -80,10 +80,11 @@ namespace GestionServer.Data
                         while (reader.Read())
                         {
                             UserStructure structure = new UserStructure();
-                            structure.id = (int)reader["structure_id"];
-                            structure.level = (int)reader["level"];
+                            structure.IdStructure = (int)reader["structure_id"];
+                            structure.Level = (int)reader["level"];
                             structure.Locked = (bool)reader["locked"];
                             structure.Effectif = (int)reader["effectif"];
+
                             structures.Add(structure);
                         }
                     }
@@ -99,29 +100,6 @@ namespace GestionServer.Data
             }
 
             return structures;
-        }
-
-        public void lvlUp(int idUser, int idStruct)
-        {
-            MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "UPDATE `user_structure` SET `level`= level + 1 WHERE user_id = @idUser AND structure_id = @idStruct";
-            cmd.Parameters.AddWithValue("@idUser", idUser);
-            cmd.Parameters.AddWithValue("@idStruct", idStruct);
-
-            try
-            {
-                base.connection.Open();
-                MySqlDataReader reader = cmd.ExecuteReader();
-            }
-
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                base.connection.Close();
-            }
         }
     }
 }

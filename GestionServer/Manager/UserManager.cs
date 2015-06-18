@@ -38,17 +38,5 @@ namespace GestionServer.Manager
                 throw e;
             }
         }
-
-        public void setCredit(int idUser, int prix)
-        {
-            try
-            {
-                AdapterFactory.getUserAdapter().setCredit(idUser, prix);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
     }
 }

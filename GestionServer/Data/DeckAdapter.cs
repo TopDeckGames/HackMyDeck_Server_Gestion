@@ -32,6 +32,20 @@ namespace GestionServer.Data
             {
                 base.connection.Open();
                 cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "SELECT id from deck WHERE user_id = @idUser AND leader_id = @idLeader";
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        return (int)reader["id"];
+                    }
+                    else
+                    {
+                        throw new Exception("Impossible de récupèrer l'identifiant du deck");
+                    }
+                }
             }
             catch
             {
@@ -41,8 +55,6 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
-
-            return 1;
         }
 
         public List<Deck> getDecks(int idUser)

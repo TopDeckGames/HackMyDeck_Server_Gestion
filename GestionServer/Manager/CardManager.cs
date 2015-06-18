@@ -33,7 +33,7 @@ namespace GestionServer.Manager
         /// </summary>
         /// <returns>Une liste de carte pouvant être achetées</returns>
         /// <param name="idUser">idUser</param>
-        public List<Card> getBuyableCards(int idUser) {
+        public List<int> getBuyableCards(int idUser) {
           try
             {
                 return AdapterFactory.getCardAdapter().getUnlockedCards(idUser);

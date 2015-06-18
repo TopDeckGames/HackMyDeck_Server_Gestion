@@ -9,6 +9,10 @@ namespace GestionServer.Data
 {
     public class ResearchAdapter : BaseAdapter
     {
+        /// <summary>
+        /// Récupère la liste des skilltrees du jeu
+        /// </summary>
+        /// <returns></returns>
         public List<SkillTrees> getSkillTrees()
         {
             MySqlCommand cmd = base.connection.CreateCommand();
@@ -44,6 +48,11 @@ namespace GestionServer.Data
             return skill;
         }
 
+        /// <summary>
+        /// Récupère la liste des skilltrees associés à l'utilisateur
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
         public List<UserSkillTrees> getUserSkillTrees(int idUser)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
@@ -83,6 +92,98 @@ namespace GestionServer.Data
                 base.connection.Close();
             }
             return skill;
+        }
+
+        /// <summary>
+        /// Teste si le parent d'un enhancement est débloqué
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idEnhancement">Identifiant enhancement</param>
+        /// <returns>Débloqué</returns>
+        public bool isParentEnhancementUnlocked(int idUser, int idEnhancement)
+        {
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText =   "SELECT unlocked                                                                                                            " +
+                                "FROM user_enhancement                                                                                                      " +
+                                "WHERE user_enhancement.user_id = @idUser                                                                                   " +
+                                "AND user_enhancement.enhancement_id = (SELECT enhancement.parent_id FROM enhancement WHERE enhancement.id = @idEnhancement)";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+            cmd.Parameters.AddWithValue("@idEnhancement", idEnhancement);
+
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        return (bool)reader["unlocked"];
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Définit une recherche comme étant la recherche en cours
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idEnhancement">Identifiant de la recherche</param>
+        public void setCurrentResearch(int idUser, int idEnhancement)
+        {
+            try
+            {
+                base.connection.Open();
+
+                //On vérifie si l'association existe déjà
+                MySqlCommand cmd = base.connection.CreateCommand();
+                cmd.CommandText = "SELECT count(*) as nb FROM user_enhancement WHERE user_id = @userId AND enhancement_id = @enhancementId";
+                cmd.Parameters.AddWithValue("@userId", idUser);
+                cmd.Parameters.AddWithValue("@enhancementId", idEnhancement);
+
+                bool exist = false;
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        exist = (Int64)reader["nb"] > 0;
+                    }
+                }
+
+                //On set la nouvelle recherche
+                if(exist)
+                {
+                    cmd.CommandText = "INSERT INTO user_enhancement(user_id, enhancement_id, unlocked, on_current_research) VALUES (@userId, @enhancementId, 0, 1)";
+                }
+                else
+                {
+                    cmd.CommandText = "UPDATE user_enhancement SET on_current_research = 1 WHERE user_id = @userId AND enhancement_id = @enhancementId";
+                }
+                cmd.ExecuteNonQuery();
+
+                //On enlève l'ancienne recherche
+                cmd.CommandText = "UPDATE user_enhancement SET on_current_research = 0 WHERE user_id = @userId AND enhancement_id <> @enhancementId AND on_current_research = 1";
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }            
         }
     }
 }

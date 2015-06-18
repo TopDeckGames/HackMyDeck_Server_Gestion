@@ -19,7 +19,7 @@ namespace GestionServer.Data
         public bool haveLeader(int idUser, int idLeader)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "SELECT count(*) as nb FROM deck WHERE idUser = @idUser AND idLeader = @idLeader";
+            cmd.CommandText = "SELECT count(*) as nb FROM deck WHERE user_id = @idUser AND leader_id = @idLeader";
             cmd.Parameters.AddWithValue("@idUser", idUser);
             cmd.Parameters.AddWithValue("@idLeader", idLeader);
 
@@ -30,7 +30,8 @@ namespace GestionServer.Data
                 {
                     if (reader.HasRows)
                     {
-                        return (int)reader["nb"] > 0;
+                        reader.Read();
+                        return (Int64)reader["nb"] > 0;
                     }
                 }
             }

@@ -297,9 +297,9 @@ namespace GestionServer.Controller
 
                 foreach(var item in skillTrees)
                 {
-                    response.addValue(item.id);
-                    response.addValue(StringHelper.fillString(item.label, SkillTrees.LABEL_LENGTH));
-                    response.addValue(item.type);
+                    response.addValue(item.Id);
+                    response.addValue(StringHelper.fillString(item.Label, SkillTrees.LABEL_LENGTH));
+                    response.addValue(item.Type);
                 }
             }
 

@@ -7,13 +7,13 @@ namespace GestionServer.Model
 {
     public class UserSkillTrees
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
-        public int skill_id { get; set; }
-        public DateTime created { get; set; }
-        public DateTime updated { get; set; }
-        public Boolean unlocked { get; set; }
-        public int effectif_allocated { get; set; }
-        public int lastEnhancement_id { get; set; }
+        public int Id { get; set; }
+        public int User_id { get; set; }
+        public int Skill_id { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+        public Boolean Unlocked { get; set; }
+        public int Effectif_allocated { get; set; }
+        public int LastEnhancement_id { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace GestionServer.Model
 {
     public class History
     {
-        public int id { get; set; }
-        public int firstToPlay_id { get; set; }
-        public DateTime created { get; set; }
-        public int totalDamage { get; set; }
-        public int totalUnit { get; set; }
-        public int totalTechno { get; set; }
-        public int winner { get; set; }
-        public int secondToPlay_id { get; set; }
+        public int Id { get; set; }
+        public int FirstToPlay_id { get; set; }
+        public DateTime Created { get; set; }
+        public int TotalDamage { get; set; }
+        public int TotalUnit { get; set; }
+        public int TotalTechno { get; set; }
+        public int Winner { get; set; }
+        public int SecondToPlay_id { get; set; }
     }
 }

@@ -247,7 +247,7 @@ namespace GestionServer.Controller
 
                 foreach (var item in history)
                 {
-                    int id = item.firstToPlay_id == idUser ? item.secondToPlay_id : item.firstToPlay_id;
+                    int id = item.FirstToPlay_id == idUser ? item.SecondToPlay_id : item.FirstToPlay_id;
                     User ennemy = null;
 
                     try
@@ -269,13 +269,13 @@ namespace GestionServer.Controller
                         ennemyName = ennemy.Login;
                     }
 
-                    response.addValue(item.id);
+                    response.addValue(item.Id);
                     response.addValue(StringHelper.fillString(ennemyName, User.LOGIN_LENGTH));
-                    response.addValue((Int32)item.created.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
-                    response.addValue(item.totalDamage);
-                    response.addValue(item.totalTechno);
-                    response.addValue(item.totalUnit);
-                    response.addValue(item.winner.Equals(idUser));
+                    response.addValue((Int32)item.Created.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+                    response.addValue(item.TotalDamage);
+                    response.addValue(item.TotalTechno);
+                    response.addValue(item.TotalUnit);
+                    response.addValue(item.Winner.Equals(idUser));
                 }
             }
 
@@ -312,9 +312,9 @@ namespace GestionServer.Controller
 
                 foreach(var item in skillTrees)
                 {
-                    response.addValue(item.id);
-                    response.addValue(item.skill_id);
-                    response.addValue(item.lastEnhancement_id);
+                    response.addValue(item.Id);
+                    response.addValue(item.Skill_id);
+                    response.addValue(item.LastEnhancement_id);
                 }
             }
 

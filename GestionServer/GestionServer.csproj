@@ -115,6 +115,7 @@
     <Compile Include="Model\SkillTrees.cs" />
     <Compile Include="Model\Structure.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserEnhancement.cs" />
     <Compile Include="Model\UserSkillTrees.cs" />
     <Compile Include="Model\UserStructure.cs" />
     <Compile Include="Monitor.cs" />

@@ -83,7 +83,7 @@ namespace GestionServer.Controller
 
                 foreach(var deck in decks)
                 {
-                    response.addValue(deck.id);
+                    response.addValue(deck.Id);
                     response.addValue(deck.Leader);
                     response.addValue(deck.Cards.Count);
 

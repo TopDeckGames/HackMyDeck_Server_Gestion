@@ -29,9 +29,9 @@ namespace GestionServer.Data
                         while (reader.Read())
                         {
                             SkillTrees s = new SkillTrees();
-                            s.id = (int)reader["id"];
-                            s.label = (string)reader["label"];
-                            s.type = (int)reader["type"];
+                            s.Id = (int)reader["id"];
+                            s.Label = (string)reader["label"];
+                            s.Type = (int)reader["type"];
                             skill.Add(s);
                         }
                     }
@@ -70,14 +70,14 @@ namespace GestionServer.Data
                         while (reader.Read())
                         {
                             UserSkillTrees user = new UserSkillTrees();
-                            user.id = (int)reader["id"];
-                            user.user_id = (int)reader["user_id"];
-                            user.skill_id = (int)reader["skill_id"];
-                            user.created = (DateTime)reader["created"];
-                            user.updated = (DateTime)reader["updated"];
-                            user.unlocked = (Boolean)reader["unlocked"];
-                            user.effectif_allocated = (int)reader["effectif_allocated"];
-                            user.lastEnhancement_id = (int)reader["lastEnhancement_id"];
+                            user.Id = (int)reader["id"];
+                            user.User_id = (int)reader["user_id"];
+                            user.Skill_id = (int)reader["skill_id"];
+                            user.Created = (DateTime)reader["created"];
+                            user.Updated = (DateTime)reader["updated"];
+                            user.Unlocked = (Boolean)reader["unlocked"];
+                            user.Effectif_allocated = (int)reader["effectif_allocated"];
+                            user.LastEnhancement_id = (int)reader["lastEnhancement_id"];
                             skill.Add(user);
                         }
                     }
@@ -243,14 +243,14 @@ namespace GestionServer.Data
                     {
                         while (reader.Read())
                         {
-                            UserEnhancements user = new UserEnhancements();
-                            user.id = (int)reader["id"];
-                            user.user_id = (int)reader["user_id"];
-                            user.enhancement_id = (int)reader["enhancement_id"];
-                            user.created = (DateTime)reader["created"];
-                            user.updated = (DateTime)reader["updated"];
-                            user.unlocked = (Boolean)reader["unlocked"];
-                            user.on_current_research = (int)reader["on_current_research"];
+                            UserEnhancement user = new UserEnhancement();
+                            user.Id = (int)reader["id"];
+                            user.User_id = (int)reader["user_id"];
+                            user.Enhancement_id = (int)reader["enhancement_id"];
+                            user.Created = (DateTime)reader["created"];
+                            user.Updated = (DateTime)reader["updated"];
+                            user.Unlocked = (Boolean)reader["unlocked"];
+                            user.On_current_research = (int)reader["on_current_research"];
 
                             userEnhancement.Add(user);
                         }
@@ -265,7 +265,7 @@ namespace GestionServer.Data
             {
                 base.connection.Close();
             }
-            return skill;
+            return userEnhancement;
         }
     }
 }

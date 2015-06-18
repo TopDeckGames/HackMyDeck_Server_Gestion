@@ -9,9 +9,9 @@ namespace GestionServer.Model
     {
         public const int LABEL_LENGTH = 50;
 
-        public int id { get; set; }
-        public string label { get; set; }
-        public int type { get; set; }
+        public int Id { get; set; }
+        public string Label { get; set; }
+        public int Type { get; set; }
 
     }
 }

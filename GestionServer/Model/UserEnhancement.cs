@@ -5,14 +5,14 @@ using System.Text;
 
 namespace GestionServer.Model
 {
-    public class UserEnhancements
+    public class UserEnhancement
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
-        public int enhancement_id { get; set; }
-        public DateTime created { get; set; }
-        public DateTime updated { get; set; }
-        public Boolean unlocked { get; set; }
-        public int on_current_research { get; set; }
+        public int Id { get; set; }
+        public int User_id { get; set; }
+        public int Enhancement_id { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+        public Boolean Unlocked { get; set; }
+        public int On_current_research { get; set; }
     }
 }

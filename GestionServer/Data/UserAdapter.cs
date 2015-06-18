@@ -74,14 +74,14 @@ namespace GestionServer.Data
                         while (reader.Read())
                         {
                             History histo = new History();
-                            histo.id = (int)reader["id"];
-                            histo.firstToPlay_id = (int)reader["firstToPlay_id"];
-                            histo.created = (DateTime)reader["created"];
-                            histo.totalDamage = (int)reader["totalDamage"];
-                            histo.totalUnit = (int)reader["totalUnit"];
-                            histo.totalTechno = (int)reader["totalTechno"];
-                            histo.winner = (int)reader["winner"];
-                            histo.secondToPlay_id = (int)reader["secondToPlay_id"];
+                            histo.Id = (int)reader["id"];
+                            histo.FirstToPlay_id = (int)reader["firstToPlay_id"];
+                            histo.Created = (DateTime)reader["created"];
+                            histo.TotalDamage = (int)reader["totalDamage"];
+                            histo.TotalUnit = (int)reader["totalUnit"];
+                            histo.TotalTechno = (int)reader["totalTechno"];
+                            histo.Winner = (int)reader["winner"];
+                            histo.SecondToPlay_id = (int)reader["secondToPlay_id"];
                             historique.Add(histo);
                         }
                     }

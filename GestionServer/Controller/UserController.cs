@@ -41,6 +41,9 @@ namespace GestionServer.Controller
                         case 5:
                             response = this.getHistory(user.Id);
                             break;
+                        case 6:
+                            response = this.getLeaders(user.Id);
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -172,11 +175,39 @@ namespace GestionServer.Controller
             return response;
         }
 
+        /// <summary>
+        /// Récupère les leaders possédés par un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Response</returns>
         private Response getLeaders(int idUser)
         {
-            List<Leader> leaders = null;
+            List<int> leaders = null;
             Response response = new Response();
             response.openWriter();
+
+            try
+            {
+                leaders = ManagerFactory.getLeaderManager().getOwnedLeaders(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(LeaderManager), "Impossible de récupèrer les leaders de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(leaders == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(int leader in leaders)
+                {
+                    response.addValue(leader);
+                }
+            }
 
             return response;
         }

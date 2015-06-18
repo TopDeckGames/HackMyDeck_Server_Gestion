@@ -44,6 +44,9 @@ namespace GestionServer.Controller
                         case 6:
                             response = this.getLeaders(user.Id);
                             break;
+                        case 7:
+                            response = this.getSkillTrees(user.Id);
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -273,6 +276,45 @@ namespace GestionServer.Controller
                     response.addValue(item.totalTechno);
                     response.addValue(item.totalUnit);
                     response.addValue(item.winner.Equals(idUser));
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Récupère l'ensemble des informations des skillTrees d'un l'utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Response</returns>
+        private Response getSkillTrees(int idUser)
+        {
+            List<UserSkillTrees> skillTrees = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                skillTrees = ManagerFactory.getResearchManager().getSkillTrees(idUser);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(ResearchManager), "Impossible de récupèrer les SkillTrees de l'utilisateur : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(skillTrees == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(var item in skillTrees)
+                {
+                    response.addValue(item.id);
+                    response.addValue(item.skill_id);
+                    response.addValue(item.lastEnhancement_id);
                 }
             }
 

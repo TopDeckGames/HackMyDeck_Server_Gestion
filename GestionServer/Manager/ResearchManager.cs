@@ -10,6 +10,7 @@ namespace GestionServer.Manager
     public class ResearchManager
     {
         private static List<SkillTrees> skillTrees;
+        private static List<Enhancement> enhancements;
 
         /// <summary>
         /// Récupère les arbres de talents
@@ -44,6 +45,59 @@ namespace GestionServer.Manager
             {
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Déclenche une recherche
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idEnhancement">Identifiant de la recherche</param>
+        public void setCurrentResearch(int idUser, int idEnhancement)
+        {
+            try
+            {
+                if (ResearchManager.enhancements == null)
+                {
+                    this.getEnhancements();
+                }
+
+                Enhancement enhancement =   (Enhancement)from item in ResearchManager.enhancements
+                                            where item.Id == idEnhancement
+                                            select item;
+
+                if(enhancement.Parent == 0 || AdapterFactory.getResearchAdapter().isParentEnhancementUnlocked(idUser, idEnhancement))
+                {
+
+                }
+                else
+                {
+                    throw new Exception("Impossible d'effectuer cette recherche, les prérequis ne sont pas validés");
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retourne la liste de tous les enhancements du jeu
+        /// </summary>
+        /// <returns></returns>
+        public List<Enhancement> getEnhancements()
+        {
+            if (ResearchManager.enhancements == null)
+            {
+                try
+                {
+
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            return ResearchManager.enhancements;
         }
     }
 }

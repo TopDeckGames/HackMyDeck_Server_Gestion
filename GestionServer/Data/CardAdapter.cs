@@ -93,9 +93,42 @@ namespace GestionServer.Data
             return cartes;
         }
 
-        public List<Card> getUnlockedCards(int idUser)
+        /// <summary>
+        /// Récupère la liste des identifiants de cartes débloquées par un utilisateur
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <returns>Liste des identifiants de cartes débloquées</returns>
+        public List<int> getUnlockedCards(int idUser)
         {
-            throw new NotImplementedException();
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "SELECT card.id as id FROM card, user_enhancement WHERE (card.enhancement_id = user_enhancement.enhancement_id AND user_enhancement.user_id = @idUser AND user_enhancement.unlocked = 1) OR card.enhancement_id = NULL";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+
+            List<int> cards = new List<int>();
+            try
+            {
+                base.connection.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            cards.Add((int)reader["id"]);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+
+            return cards;
         }
     }
 }

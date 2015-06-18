@@ -46,6 +46,9 @@ namespace GestionServer.Controller
                         case 5:
                             response = this.getLeaders();
                             break;
+                        case 6:
+                            response = this.getSkillTrees();
+                            break;
                         default:
                             Logger.log(typeof(GestionController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -259,6 +262,44 @@ namespace GestionServer.Controller
                     response.addValue(leader.Price);
                     response.addValue(leader.Energy);
                     response.addValue(StringHelper.fillString(leader.Effect, Leader.EFFECT_LENGTH));
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Récupère l'ensemble des skilltrees du jeu
+        /// </summary>
+        /// <returns>Response</returns>
+        private Response getSkillTrees()
+        {
+            List<SkillTrees> skillTrees = null;
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                skillTrees = ManagerFactory.getResearchManager().getSkillTrees();
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(ResearchManager), "Impossible de récupèrer l'ensemble des SkillTrees : " + e.Message, Logger.LogType.Error);
+            }
+
+            if(skillTrees == null)
+            {
+                response.addValue(0);
+            }
+            else
+            {
+                response.addValue(1);
+
+                foreach(var item in skillTrees)
+                {
+                    response.addValue(item.id);
+                    response.addValue(StringHelper.fillString(item.label, SkillTrees.LABEL_LENGTH));
+                    response.addValue(item.type);
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿using GestionServer.Model;
+using GestionServer.Model;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -243,7 +243,7 @@ namespace GestionServer.Data
                     {
                         while (reader.Read())
                         {
-                            UserSkillTrees user = new UserSkillTrees();
+                            UserEnhancements user = new UserEnhancements();
                             user.id = (int)reader["id"];
                             user.user_id = (int)reader["user_id"];
                             user.enhancement_id = (int)reader["enhancement_id"];

@@ -80,9 +80,24 @@ namespace GestionServer.Manager
             }
         }
 
+        /// <summary>
+        /// Retourne la liste de tous les enhancements du jeu
+        /// </summary>
+        /// <returns></returns>
         public List<Enhancement> getEnhancements()
         {
+            if (ResearchManager.enhancements == null)
+            {
+                try
+                {
 
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            return ResearchManager.enhancements;
         }
     }
 }

@@ -98,5 +98,28 @@ namespace GestionServer.Data
 
             return historique;  
         }
+
+        public void setCredit(int idUser, int prix)
+        {
+            MySqlCommand cmd = base.connection.CreateCommand();
+            cmd.CommandText = "UPDATE user SET credit = @prix WHERE id = @idUser";
+            cmd.Parameters.AddWithValue("@idUser", idUser);
+            cmd.Parameters.AddWithValue("@prix", prix);
+
+            try
+            {
+                base.connection.Open();
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                base.connection.Close();
+            }
+        }
     }
 }

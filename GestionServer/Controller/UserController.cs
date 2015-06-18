@@ -95,8 +95,8 @@ namespace GestionServer.Controller
                 //Ajout des valeurs des structures
                 foreach(var structure in structures)
                 {
-                    response.addValue(structure.IdStructure);
-                    response.addValue(structure.Level);
+                    response.addValue(structure.id);
+                    response.addValue(structure.level);
                     response.addValue(structure.Locked);
                     response.addValue(structure.Effectif);
                 }

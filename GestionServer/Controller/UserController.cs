@@ -339,6 +339,7 @@ namespace GestionServer.Controller
             {
                 ManagerFactory.getStructureManager().lvlUp(idUser, idStructure);
                 response.addValue(1);
+                response.addValue(idStructure);
             }
             catch(Exception e)
             {

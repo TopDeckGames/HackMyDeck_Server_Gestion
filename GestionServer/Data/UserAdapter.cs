@@ -102,7 +102,7 @@ namespace GestionServer.Data
         public void setCredit(int idUser, int prix)
         {
             MySqlCommand cmd = base.connection.CreateCommand();
-            cmd.CommandText = "UPDATE user SET credit = @prix WHERE id = @idUser";
+            cmd.CommandText = "UPDATE user SET credit = credit - @prix WHERE id = @idUser";
             cmd.Parameters.AddWithValue("@idUser", idUser);
             cmd.Parameters.AddWithValue("@prix", prix);
 

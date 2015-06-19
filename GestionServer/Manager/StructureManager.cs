@@ -62,11 +62,9 @@ namespace GestionServer.Manager
                 user = AdapterFactory.getUserAdapter().getInfos(idUser);
                 structures = AdapterFactory.getStructureAdapter().getUserStructures(idUser);
 
-                UserStructure userStructure = (UserStructure)from item in structures
-                                              where item.structure_id == idStruct
-                                              select item;
+                UserStructure userStructure = structures.Where(i => i.id == idStruct).First();                
 
-                int prix = Convert.ToInt32(50 * (Math.Exp((userStructure.level - 1) / 3) + 1));
+                int prix = 50 * userStructure.level;
 
                 if (user.Credit >= prix && userStructure.level < 10)
                 {

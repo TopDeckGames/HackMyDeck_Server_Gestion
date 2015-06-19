@@ -55,29 +55,29 @@ namespace GestionServer.Manager
         public void lvlUp(int idUser, int idStruct)
         {
             User user = new User();
-            List<UserStructure> structure = new List<UserStructure>();
-            int prix = 150;
+            List<UserStructure> structures = new List<UserStructure>();
 
-                try
+            try
+            {
+                user = AdapterFactory.getUserAdapter().getInfos(idUser);
+                structures = AdapterFactory.getStructureAdapter().getUserStructures(idUser);
+
+                UserStructure userStructure = (UserStructure)from item in structures
+                                              where item.structure_id == idStruct
+                                              select item;
+
+                int prix = Convert.ToInt32(50 * (Math.Exp((userStructure.level - 1) / 3) + 1));
+
+                if (user.Credit >= prix && userStructure.level < 10)
                 {
-                    user = AdapterFactory.getUserAdapter().getInfos(idUser);
-                    structure = AdapterFactory.getStructureAdapter().getUserStructures(idUser);
-
-                 foreach(UserStructure id in structure) 
-                 {
-                    if (user.Credit >= prix && id.structure_id == idStruct && id.level < 10) 
-                    {
-                        AdapterFactory.getStructureAdapter().lvlUp(idUser, idStruct);
-                        AdapterFactory.getUserAdapter().setCredit(idUser, prix);
-                    }
-                 }
-
+                    AdapterFactory.getStructureAdapter().lvlUp(idUser, idStruct);
+                    AdapterFactory.getUserAdapter().setCredit(idUser, prix);
                 }
-                catch
-                {
-                    throw;
-                }
-
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 

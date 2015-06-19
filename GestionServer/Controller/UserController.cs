@@ -47,6 +47,9 @@ namespace GestionServer.Controller
                         case 7:
                             response = this.getSkillTrees(user.Id);
                             break;
+                        case 8:
+                            response = this.levelUp(user.Id, reader.ReadInt32());
+                            break;
                         default:
                             Logger.log(typeof(UserController), "L'action n'existe pas : " + idAction, Logger.LogType.Error);
                             response = new Response();
@@ -316,6 +319,31 @@ namespace GestionServer.Controller
                     response.addValue(item.Skill_id);
                     response.addValue(item.LastEnhancement_id);
                 }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Monte le level d'un batiment
+        /// </summary>
+        /// <param name="idUser">Identifiant de l'utilisateur</param>
+        /// <param name="idStructure">Identifiant de la structure</param>
+        /// <returns>Response</returns>
+        private Response levelUp(int idUser, int idStructure)
+        {
+            Response response = new Response();
+            response.openWriter();
+
+            try
+            {
+                ManagerFactory.getStructureManager().lvlUp(idUser, idStructure);
+                response.addValue(1);
+            }
+            catch(Exception e)
+            {
+                Logger.log(typeof(StructureManager), "Impossible de changer le niveau de la structure : " + e.Message, Logger.LogType.Error);
+                response.addValue(0);
             }
 
             return response;
